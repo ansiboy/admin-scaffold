@@ -6,6 +6,7 @@
     "compileOnSave": true,
     "exclude": [
         "static",
+        "demo",
         "test/static"
     ]
 }

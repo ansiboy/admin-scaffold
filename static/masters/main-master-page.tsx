@@ -1,14 +1,8 @@
 import * as React from "react";
 import { MasterPage, MasterPageProps } from './master-page';
 import { masterPageNames } from './names';
-import { ValueStore } from 'maishu-chitu';
-import { Resource, SimpleMenuItem } from '../models';
 import { Application } from 'maishu-chitu-react';
-import { guid } from 'maishu-toolkit';
-
-export type MenuItem = Resource & {
-    icon?: string, parent: MenuItem, children: MenuItem[],
-}
+import { MenuItem } from "../website-config";
 
 interface State {
     currentPageUrl?: string,
@@ -21,25 +15,24 @@ interface State {
     roleName?: string,
 }
 
-export class MainMasterPage extends MasterPage<State> {
+interface Props extends MasterPageProps {
+    menuItems: MenuItem[],
+}
+
+
+export class MainMasterPage extends MasterPage<State, Props> {
 
     name = masterPageNames.main
 
     pageContainer: HTMLElement;
-    // element: HTMLElement;
     private app: Application;
-    private menuResources = new ValueStore<Resource[]>([]);
 
-    constructor(props: MasterPageProps) {
+    constructor(props: Props) {
         super(props);
 
-        this.state = { menuItems: [], username: "" }
+        this.state = { menuItems: this.props.menuItems, username: "" }
 
         this.app = props.app;
-        this.menuResources.add((value) => {
-            let menuItems = translateToMenuItems(value).filter(o => o.parent == null);
-            this.setState({ menuItems: menuItems })
-        })
     }
 
     get element() {
@@ -48,14 +41,14 @@ export class MainMasterPage extends MasterPage<State> {
 
     private showPageByNode(node: MenuItem) {
         let children = node.children || []
-        if (!node.page_path && (node.children || []).length > 0) {
+        if (!node.path && (node.children || []).length > 0) {
             this.showPageByNode(children[0])
             return
         }
-        let pagePath = node.page_path;
+        let pagePath = node.path;
         if (pagePath == null && children.length > 0) {
             node = children[0];
-            pagePath = node.page_path;
+            pagePath = node.path;
         }
 
         if (!pagePath) {
@@ -104,9 +97,7 @@ export class MainMasterPage extends MasterPage<State> {
             if (item == null)
                 throw new Error("item is null")
 
-            if (item.page_path == `#${pageUrl}`) {
-                // let obj = this.app.parseUrl(item.page_path) || { pageName: '' }
-                // if (obj.pageName == pageName)
+            if (item.path == `#${pageUrl}`) {
                 return item
             }
 
@@ -115,35 +106,6 @@ export class MainMasterPage extends MasterPage<State> {
         }
 
         return null
-    }
-
-    private translateToResource(o: SimpleMenuItem): Resource {
-        let path = o.path; //typeof o.path == "function" ? o.path() : o.path;
-        return {
-            id: o.id,//this.textToGuid(o.name + path || ""),
-            name: o.name, page_path: path, type: o.hidden ? "module" : "menu",
-            icon: o.icon, parent_id: o.parentId, sort_number: o.sortNumber
-        } as Resource
-    }
-
-    setMenu(...menuItems: SimpleMenuItem[]) {
-
-        let resources: Resource[] = [];
-        menuItems.sort((a, b) => a.sortNumber < b.sortNumber ? -1 : 1);
-        let stack = new Array<SimpleMenuItem>();
-        stack.push(...menuItems);
-        while (stack.length > 0) {
-            let item = stack.shift();
-
-            let resource = this.translateToResource(item);
-            resources.push(resource);
-
-            item.children = item.children || [];
-            item.children.forEach(c => c.parentId = resource.id);
-            stack.push(...(item.children || []));
-        }
-
-        this.menuResources.value = resources;
     }
 
     setToolbar(value: JSX.Element) {
@@ -164,10 +126,10 @@ export class MainMasterPage extends MasterPage<State> {
     }
 
     render() {
-        let { menuItems: menuData } = this.state;
+        let { menuItems } = this.state;
         let currentPageUrl: string = this.state.currentPageUrl || '';
 
-        let firstLevelNodes = menuData.filter(o => o.type == "menu");
+        let firstLevelNodes = menuItems.filter(o => o.type == "menu");
         let currentNode: MenuItem | null | undefined
         if (this.state.resourceId) {
             currentNode = this.findMenuItemByResourceId(firstLevelNodes, this.state.resourceId)
@@ -206,14 +168,10 @@ export class MainMasterPage extends MasterPage<State> {
             hideFirst = true;
             hideSecond = true;
         }
-        else if (firstLevelNode == null || (firstLevelNode.children || []).filter(o => o.type == "menu").length == 0) {
+        else if (firstLevelNode == null || (firstLevelNode.children || []).filter(o => o.type == "menu" && (o.hidden != true)).length == 0) {
             nodeClassName = 'hideSecond';
             hideSecond = true;
         }
-
-        // return <div className={`${nodeClassName}`} ref={e => this.element = e || this.element}>
-
-        // </div >
 
         return <>
             <div className="first" style={{ display: hideFirst ? "none" : "" }}>
@@ -223,7 +181,7 @@ export class MainMasterPage extends MasterPage<State> {
                             style={{ cursor: 'pointer', display: o.type != "menu" ? "none" : '' }}
                             onClick={() => this.showPageByNode(o)}>
                             <i className={o.icon}></i>
-                            <span menu-id={o.id} sort-number={o.sort_number}>{o.name}</span>
+                            <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span>
                         </li>
                     )}
                 </ul>
@@ -233,10 +191,10 @@ export class MainMasterPage extends MasterPage<State> {
                     {(firstLevelNode ? (firstLevelNode.children || []) : []).filter(o => o.type == "menu").map((o, i) =>
                         <li key={i} className={o == secondLevelNode ? "list-group-item active" : "list-group-item"}
                             style={{ cursor: 'pointer', display: o.type != "menu" ? "none" : '' }}
-                            page-url={o.page_path}
+                            page-url={o.path}
                             onClick={() => this.showPageByNode(o)}>
                             <i className={o.icon}></i>
-                            <span menu-id={o.id} sort-number={o.sort_number}>{o.name}</span>
+                            <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span>
                         </li>
                     )}
                 </ul>
@@ -255,39 +213,3 @@ export class MainMasterPage extends MasterPage<State> {
     }
 }
 
-
-
-
-
-function translateToMenuItems(resources: Resource[]): MenuItem[] {
-
-    resources.forEach(o => {
-        o.id = o.id || guid();
-    })
-
-    let arr = new Array<MenuItem>();
-    let stack: MenuItem[] = [...resources.filter(o => o.parent_id == null) as MenuItem[]];
-    while (stack.length > 0) {
-        let item = stack.shift();
-        item.children = resources.filter(o => o.parent_id == item.id) as MenuItem[];
-        if (item.parent_id) {
-            item.parent = resources.filter(o => o.id == item.parent_id)[0] as MenuItem;
-        }
-
-        stack.push(...item.children);
-
-        arr.push(item);
-    }
-
-    let ids = arr.map(o => o.id);
-    for (let i = 0; i < ids.length; i++) {
-        let item = arr.filter(o => o.id == ids[i])[0];
-        console.assert(item != null);
-
-        if (item.children.length > 1) {
-            item.children.sort((a, b) => a.sort_number < b.sort_number ? -1 : 1);
-        }
-    }
-
-    return arr;
-}

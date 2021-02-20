@@ -9,8 +9,8 @@ export interface MasterPageConstructor {
     new(props: MasterPageProps): MasterPage<any>
 }
 
-export abstract class MasterPage<S> extends React.Component<MasterPageProps, S> {
-    constructor(props: MasterPageProps) {
+export abstract class MasterPage<S, P = MasterPageProps> extends React.Component<P, S> {
+    constructor(props: P) {
         super(props)
     }
 
