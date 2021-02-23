@@ -3,6 +3,7 @@ import { MasterPage, MasterPageProps } from './master-page';
 import { masterPageNames } from './names';
 import { Application } from 'maishu-chitu-react';
 import { MenuItem } from "../website-config";
+import { parseUrl } from "maishu-chitu";
 
 interface State {
     currentPageUrl?: string,
@@ -97,7 +98,8 @@ export class MainMasterPage extends MasterPage<State, Props> {
             if (item == null)
                 throw new Error("item is null")
 
-            if (item.path == `#${pageUrl}`) {
+            let r = parseUrl(pageUrl);
+            if (item.path == `#${r.pageName}`) {
                 return item
             }
 
@@ -135,6 +137,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
             currentNode = this.findMenuItemByResourceId(firstLevelNodes, this.state.resourceId)
         }
         else if (currentPageUrl) {
+
             currentNode = this.findMenuItemByPageUrl(firstLevelNodes, currentPageUrl);
             let q = currentPageUrl.indexOf("?");
             if (currentNode == null && q > 0) {
