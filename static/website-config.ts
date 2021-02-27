@@ -1,10 +1,11 @@
 export type MenuItem = {
-    id: string, name: string, path: string,
+    id: string, name: string, path?: string,
     children?: MenuItem[], icon?: string;
     parent?: MenuItem,
     type?: "menu" | "button",
     sortNumber?: number,
-    hidden?: boolean
+    hidden?: boolean,
+    roleIds?: string[]
 };
 
 let menuItems: MenuItem[] = [

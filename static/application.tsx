@@ -14,9 +14,9 @@ let mainContainer = document.getElementById("main-master");
 let blankContainer = document.getElementById("blank-master");
 
 export class Application extends chitu_react.Application {
-    private config: WebsiteConfig;
-    private simpleMaster: SimpleMasterPage;
-    private mainMaster: MainMasterPage;
+    private _config: WebsiteConfig;
+    private _simpleMaster: SimpleMasterPage;
+    private _mainMaster: MainMasterPage;
 
     constructor(config: WebsiteConfig) {
         super({
@@ -27,15 +27,27 @@ export class Application extends chitu_react.Application {
             }
         })
 
-        this.config = config;
-        this.processMenuItems(this.config);
+        this._config = config;
+        this.processMenuItems(this._config);
 
         this.error.add((sender, error) => errorHandle(error));
         this.pageCreated.add((sender, page) => this.onPageCreated(page));
 
-        ReactDOM.render(<SimpleMasterPage app={this} ref={e => this.simpleMaster = e || this.simpleMaster} />, simpleContainer);
-        ReactDOM.render(<MainMasterPage app={this} menuItems={this.config.menuItems}
-            ref={e => this.mainMaster = e || this.mainMaster} />, mainContainer);
+        ReactDOM.render(<SimpleMasterPage app={this} ref={e => this._simpleMaster = e || this._simpleMaster} />, simpleContainer);
+        ReactDOM.render(<MainMasterPage app={this} menuItems={this._config.menuItems}
+            ref={e => this._mainMaster = e || this._mainMaster} />, mainContainer);
+    }
+
+    get config() {
+        return this._config;
+    }
+
+    get simpleMaster() {
+        return this._simpleMaster;
+    }
+
+    get mainMaster() {
+        return this._mainMaster;;
     }
 
     private processMenuItems(config: WebsiteConfig) {
@@ -55,7 +67,7 @@ export class Application extends chitu_react.Application {
     showPage(pageUrl: string, args?: PageData, forceRender?: boolean): Page {
         args = args || {};
         let d = this.parseUrl(pageUrl);
-        args.container = this.config.containers[d.pageName];
+        args.container = this._config.containers[d.pageName];
         return super.showPage(pageUrl, args, forceRender);
     }
 
