@@ -4,6 +4,8 @@ var requirejsConfig = {
     "paths": {
         "css": "node_modules/maishu-requirejs-plugins/src/css",
         "text": "node_modules/maishu-requirejs-plugins/lib/text",
+        "json": "node_modules/maishu-requirejs-plugins/lib/json",
+        
         "react": "node_modules/react/umd/react.development",
         "react-dom": "node_modules/react-dom/umd/react-dom.development",
         "maishu-chitu": "node_modules/maishu-chitu/dist/index.min",
@@ -17,6 +19,7 @@ var requirejsConfig = {
     }
 }
 
+requirejs.config(requirejsConfig);
 requirejs(["website-config"], function (mod) {
     let config = mod.default || mod;
     loadApplication(config);
