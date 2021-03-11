@@ -99,7 +99,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
                 throw new Error("item is null")
 
             let r = parseUrl(pageUrl);
-            if (item.path == `#${r.pageName}`) {
+            if (item.path == `#${pageUrl}` || item.path == `#${r.pageName}`) {
                 return item
             }
 
