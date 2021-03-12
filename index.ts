@@ -2,6 +2,7 @@ import * as  fs from "fs";
 import * as path from "path";
 import { pathConcat } from "maishu-toolkit";
 import { errors } from "./errors";
+import * as sc from "maishu-chitu-scaffold";
 
 /** @param {string} [basePath]  */
 export function getVirtualPaths(basePath?: string, targetPath?: string) {
@@ -13,6 +14,9 @@ export function getVirtualPaths(basePath?: string, targetPath?: string) {
     let staticDir = path.join(__dirname, "static");
     let staticFilePaths = getFilePaths(staticDir);
     Object.assign(staticFilePaths, existsFilePaths);
+
+    let scFiles = sc.getVirtualPaths(basePath, targetPath);
+    staticFilePaths = Object.assign(scFiles, staticFilePaths);
 
     if (basePath) {
         let keys = Object.getOwnPropertyNames(staticFilePaths);

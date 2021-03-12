@@ -6,12 +6,23 @@ import * as React from "react";
 
 import { SimpleMasterPage } from "./masters/simple-master-page";
 import { MainMasterPage } from "./masters/main-master-page";
-import "./content/admin_style_default.less"
 import { WebsiteConfig } from "./website-config";
 
-let simpleContainer = document.getElementById("simple-master");
-let mainContainer = document.getElementById("main-master");
-let blankContainer = document.getElementById("blank-master");
+import "./content/bootstrap.css";
+import "./content/admin_style_default.less";
+import "node_modules/font-awesome/css/font-awesome.css";
+
+let simpleContainer = document.createElement("div");
+document.body.appendChild(simpleContainer);
+simpleContainer.id = "simple-master";
+
+let mainContainer = document.createElement("div");
+document.body.appendChild(mainContainer);
+mainContainer.id = "main-master";
+
+let blankContainer = document.createElement("div");
+document.body.appendChild(blankContainer);
+blankContainer.id = "blank-master";
 
 export class Application extends chitu_react.Application {
     private _config: WebsiteConfig;
@@ -32,6 +43,8 @@ export class Application extends chitu_react.Application {
 
         this.error.add((sender, error) => errorHandle(error));
         this.pageCreated.add((sender, page) => this.onPageCreated(page));
+
+
 
         ReactDOM.render(<SimpleMasterPage app={this} ref={e => this._simpleMaster = e || this._simpleMaster} />, simpleContainer);
         ReactDOM.render(<MainMasterPage app={this} menuItems={this._config.menuItems}

@@ -18,12 +18,12 @@ let menuItems: MenuItem[] = [
 ];
 
 let websiteConfig = {
-    "requirejs": {
-        "paths": {
+    requirejs: {
+        paths: {
         }
     },
-    "containers": {
-        "login": "simple"
+    containers: {
+        login: "simple"
     },
     menuItems
 }

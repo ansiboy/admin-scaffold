@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 const maishu_toolkit_1 = require("maishu-toolkit");
 const errors_1 = require("./errors");
+const sc = require("maishu-chitu-scaffold");
 /** @param {string} [basePath]  */
 function getVirtualPaths(basePath, targetPath) {
     let existsFilePaths = {};
@@ -14,6 +15,8 @@ function getVirtualPaths(basePath, targetPath) {
     let staticDir = path.join(__dirname, "static");
     let staticFilePaths = getFilePaths(staticDir);
     Object.assign(staticFilePaths, existsFilePaths);
+    let scFiles = sc.getVirtualPaths(basePath, targetPath);
+    staticFilePaths = Object.assign(scFiles, staticFilePaths);
     if (basePath) {
         let keys = Object.getOwnPropertyNames(staticFilePaths);
         for (let i = 0; i < keys.length; i++) {
