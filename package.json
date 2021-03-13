@@ -27,5 +27,5 @@
         "node-sass": "^5.0.0"
     },
     "name": "maishu-admin-scaffold",
-    "version": "1.2.0"
+    "version": "1.2.1"
 }

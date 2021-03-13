@@ -80,7 +80,7 @@ export class Application extends chitu_react.Application {
     showPage(pageUrl: string, args?: PageData, forceRender?: boolean): Page {
         args = args || {};
         let d = this.parseUrl(pageUrl);
-        args.container = this._config.containers[d.pageName];
+        args.container = (this._config.containers || {})[d.pageName];
         return super.showPage(pageUrl, args, forceRender);
     }
 
