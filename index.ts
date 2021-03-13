@@ -38,8 +38,11 @@ function getFilePaths(dir: string): { [key: string]: string } {
     let stack = new Array<string>();
     stack.push("");
 
-    while (stack.length > 0) {
+    while (true) {
         let relativePath = stack.pop();
+        if (relativePath === undefined)
+            break;
+
         let p = path.join(dir, relativePath);
         let names = fs.readdirSync(p);
         for (let i = 0; i < names.length; i++) {
