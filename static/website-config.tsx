@@ -17,7 +17,20 @@ let menuItems: MenuItem[] = [
     // }
 ];
 
-let websiteConfig = {
+
+export interface WebsiteConfig {
+    requirejs?: {
+        shim?: {
+            [key: string]: { deps?: string[], exports?: string, }
+        },
+        paths?: { [key: string]: string },
+        context?: string,
+    },
+    containers?: { [pageName: string]: string },
+    menuItems?: MenuItem[],
+}
+
+let websiteConfig: WebsiteConfig = {
     requirejs: {
         paths: {
         }
@@ -27,7 +40,5 @@ let websiteConfig = {
     },
     menuItems
 }
-
-export type WebsiteConfig = typeof websiteConfig;
 
 export default websiteConfig;

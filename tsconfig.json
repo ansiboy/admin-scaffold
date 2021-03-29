@@ -2,7 +2,8 @@
     "compilerOptions": {
         "module": "CommonJS",
         "target": "ES6",
-        "strict": true
+        "strict": true,
+        "noEmit": true,
     },
     "compileOnSave": true,
     "exclude": [

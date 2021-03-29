@@ -11,6 +11,7 @@ import { WebsiteConfig } from "./website-config";
 import "./content/bootstrap.css";
 import "./content/admin_style_default.less";
 import "node_modules/font-awesome/css/font-awesome.css";
+import { pathConcat } from 'maishu-toolkit';
 
 let simpleContainer = document.createElement("div");
 document.body.appendChild(simpleContainer);
@@ -28,8 +29,9 @@ export class Application extends chitu_react.Application {
     private _config: WebsiteConfig;
     private _simpleMaster: SimpleMasterPage;
     private _mainMaster: MainMasterPage;
+    private req: Function;
 
-    constructor(config: WebsiteConfig) {
+    constructor(config: WebsiteConfig, req: Function) {
         super({
             container: {
                 simple: simpleContainer,
@@ -38,13 +40,12 @@ export class Application extends chitu_react.Application {
             }
         })
 
+        this.req = req;
         this._config = config;
         this.processMenuItems(this._config);
 
         this.error.add((sender, error) => errorHandle(error));
         this.pageCreated.add((sender, page) => this.onPageCreated(page));
-
-
 
         ReactDOM.render(<SimpleMasterPage app={this} ref={e => this._simpleMaster = e || this._simpleMaster} />, simpleContainer);
         ReactDOM.render(<MainMasterPage app={this} menuItems={this._config.menuItems}
@@ -90,9 +91,72 @@ export class Application extends chitu_react.Application {
 
     }
 
+
+    private siteRequireJS = {};
+
+    async loadjs(path: string) {
+
+        if (path.startsWith("modules//")) {
+            path = path.substr("modules//".length);
+            let arr = path.split("/");
+            console.assert(arr.length >= 2);
+            let sitePath = arr.shift();
+            if (!this.siteRequireJS[sitePath]) {
+                let websiteConfig = await this.getWebsiteConfig(sitePath);
+                this.siteRequireJS[sitePath] = this.configRequirejs(websiteConfig, sitePath);
+            }
+
+            let newPath = `modules/${arr.join('/')}`;
+            return new Promise((resolve, reject) => {
+                this.siteRequireJS[sitePath]([newPath],
+                    mod => {
+                        resolve(mod)
+                    },
+                    err => {
+                        reject(err)
+                    }
+                );
+            })
+        }
+
+        return new Promise<any>((reslove, reject) => {
+            this.req([path],
+                function (result: any) {
+                    reslove(result);
+                },
+                function (err: Error) {
+                    reject(err);
+                });
+
+
+        });
+    }
+
+    private getWebsiteConfig(sitePath: string) {
+        return new Promise<WebsiteConfig>((resolve, reject) => {
+            let websiteConfigPath = pathConcat(sitePath, "website-config.js");
+            requirejs([websiteConfigPath], mod => {
+                resolve(mod.default || mod);
+            }, err => {
+                reject(err);
+            })
+        })
+    }
+
+    private configRequirejs(stationWebsiteConfig: WebsiteConfig, sitePath: string) {
+        stationWebsiteConfig.requirejs = stationWebsiteConfig.requirejs || { paths: {} };
+        stationWebsiteConfig.requirejs.paths = stationWebsiteConfig.requirejs.paths || {};
+        stationWebsiteConfig.requirejs["context"] = sitePath;
+        stationWebsiteConfig.requirejs["baseUrl"] = sitePath;
+
+        let req = requirejs.config(stationWebsiteConfig.requirejs);
+        return req;
+    }
+
+
 }
 
-export function run(config: WebsiteConfig) {
-    window["app"] = window["app"] || new Application(config);
+export function run(config: WebsiteConfig, req) {
+    window["app"] = window["app"] || new Application(config, req);
     return window["app"];
 }
