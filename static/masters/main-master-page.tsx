@@ -183,21 +183,23 @@ export class MainMasterPage extends MasterPage<State, Props> {
                         <li key={i} className={o == firstLevelNode ? "list-group-item active" : "list-group-item"}
                             style={{ cursor: 'pointer', display: o.type != "menu" ? "none" : '' }}
                             onClick={() => this.showPageByNode(o)}>
-                            <i className={o.icon}></i>
-                            <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span>
+                            {o.type == "spliter" ? <hr /> : <> <i className={o.icon}></i>
+                                <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span></>}
                         </li>
                     )}
                 </ul>
             </div>
             <div className="second" style={{ display: hideSecond ? "none" : "" }}>
                 <ul className="list-group">
-                    {(firstLevelNode ? (firstLevelNode.children || []) : []).filter(o => o.type == "menu").map((o, i) =>
+                    {(firstLevelNode ? (firstLevelNode.children || []) : []).filter(o => o.type == "menu" || o.type == "spliter").map((o, i) =>
                         <li key={i} className={o == secondLevelNode ? "list-group-item active" : "list-group-item"}
                             style={{ cursor: 'pointer', display: o.type != "menu" ? "none" : '' }}
                             page-url={o.path}
                             onClick={() => this.showPageByNode(o)}>
-                            <i className={o.icon}></i>
-                            <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span>
+                            {o.type == "menu" ? <>
+                                <i className={o.icon}></i>
+                                <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span></> :
+                                <hr />}
                         </li>
                     )}
                 </ul>

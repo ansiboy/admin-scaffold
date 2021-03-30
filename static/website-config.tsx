@@ -2,11 +2,12 @@ export type MenuItem = {
     id: string, name: string, path?: string,
     children?: MenuItem[], icon?: string;
     parent?: MenuItem,
-    type?: "menu" | "button",
+    type?: "menu" | "button" | "spliter",
     sortNumber?: number,
     hidden?: boolean,
     roleIds?: string[]
 };
+
 
 let menuItems: MenuItem[] = [
     // {
