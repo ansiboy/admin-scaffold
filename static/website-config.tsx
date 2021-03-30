@@ -1,3 +1,5 @@
+import { WebsiteConfig as BaseWebsiteConfig } from "maishu-chitu-scaffold/static/website-config";
+
 export type MenuItem = {
     id: string, name: string, path?: string,
     children?: MenuItem[], icon?: string;
@@ -19,15 +21,7 @@ let menuItems: MenuItem[] = [
 ];
 
 
-export interface WebsiteConfig {
-    requirejs?: {
-        shim?: {
-            [key: string]: { deps?: string[], exports?: string, }
-        },
-        paths?: { [key: string]: string },
-        context?: string,
-    },
-    containers?: { [pageName: string]: string },
+export interface WebsiteConfig extends BaseWebsiteConfig {
     menuItems?: MenuItem[],
 }
 

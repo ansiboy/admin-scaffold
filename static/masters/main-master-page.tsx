@@ -193,7 +193,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
                 <ul className="list-group">
                     {(firstLevelNode ? (firstLevelNode.children || []) : []).filter(o => o.type == "menu" || o.type == "spliter").map((o, i) =>
                         <li key={i} className={o == secondLevelNode ? "list-group-item active" : "list-group-item"}
-                            style={{ cursor: 'pointer', display: o.type != "menu" ? "none" : '' }}
+                            style={{ cursor: o.type == "menu" ? 'pointer' : null }}
                             page-url={o.path}
                             onClick={() => this.showPageByNode(o)}>
                             {o.type == "menu" ? <>

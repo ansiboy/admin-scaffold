@@ -1,4 +1,4 @@
-let websiteConfig = {
+let websiteConfig: import("../static/website-config").WebsiteConfig = {
     "requirejs": {
         "paths": {
         }
@@ -13,9 +13,10 @@ let websiteConfig = {
                 { id: "3CE34AB9-7814-4FE5-85E2-ABA6AAF9C1FD", name: "页面编辑", path: "#page-edit", hidden: true }
             ]
         }
-    ]
+    ],
+    mode: "production"
 }
 
-export type WebsiteConfig = typeof websiteConfig;
+// export type WebsiteConfig = typeof websiteConfig;
 
 export default websiteConfig;

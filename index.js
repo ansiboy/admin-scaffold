@@ -16,7 +16,6 @@ function getVirtualPaths(basePath, targetPath) {
     let staticFilePaths = getFilePaths(staticDir);
     Object.assign(staticFilePaths, existsFilePaths);
     let scFiles = sc.getVirtualPaths(basePath, targetPath);
-    staticFilePaths = Object.assign(scFiles, staticFilePaths);
     if (basePath) {
         let keys = Object.getOwnPropertyNames(staticFilePaths);
         for (let i = 0; i < keys.length; i++) {
@@ -25,6 +24,7 @@ function getVirtualPaths(basePath, targetPath) {
             delete staticFilePaths[keys[i]];
         }
     }
+    staticFilePaths = Object.assign(scFiles, staticFilePaths);
     return staticFilePaths;
 }
 exports.getVirtualPaths = getVirtualPaths;
