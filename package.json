@@ -3,6 +3,7 @@
         "font-awesome": "^4.7.0",
         "maishu-chitu-react": "^1.27.0",
         "maishu-chitu-scaffold": "^1.13.0",
+        "maishu-data-page": "^1.0.1",
         "maishu-dilu": "^1.9.1",
         "maishu-dilu-react": "^1.4.0",
         "maishu-requirejs-plugins": "^1.3.0",
@@ -29,5 +30,5 @@
         "node-sass": "^5.0.0"
     },
     "name": "maishu-admin-scaffold",
-    "version": "1.5.0"
+    "version": "1.6.0"
 }
