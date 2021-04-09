@@ -8,8 +8,8 @@
             "type": "node",
             "request": "launch",
             "name": "启动程序",
-            // "program": "${workspaceRoot}/node_modules/maishu-node-mvc/cli/mvc.js",
-            "program": "${workspaceRoot}/node_modules/maishu-node-mvc/cli/static.js",
+            "program": "${workspaceRoot}/node_modules/maishu-node-mvc/cli/mvc.js",
+            // "program": "${workspaceRoot}/node_modules/maishu-node-mvc/cli/static.js",
             "outFiles": [],
             "cwd": "${workspaceFolder}/demo",
             "args": [

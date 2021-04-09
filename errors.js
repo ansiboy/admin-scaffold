@@ -8,5 +8,10 @@ class Errors extends maishu_toolkit_1.Errors {
         let error = new Error(msg);
         return error;
     }
+    notAbsolutePath(path) {
+        let msg = `Path '${path}' is not absolute path.`;
+        let error = new Error(msg);
+        return error;
+    }
 }
 exports.errors = new Errors();

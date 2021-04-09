@@ -1,4 +1,4 @@
-let websiteConfig: import("../static/website-config").WebsiteConfig = {
+let websiteConfig: import("../../static/website-config").WebsiteConfig = {
     "requirejs": {
         "paths": {
         }

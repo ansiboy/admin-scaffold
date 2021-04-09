@@ -6,6 +6,11 @@ class Errors extends BaseErrors {
         let error = new Error(msg);
         return error;
     }
+    notAbsolutePath(path: string) {
+        let msg = `Path '${path}' is not absolute path.`;
+        let error = new Error(msg);
+        return error;
+    }
 }
 
 export let errors = new Errors();

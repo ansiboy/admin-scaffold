@@ -3,7 +3,7 @@ import { MasterPage, MasterPageProps } from './master-page';
 import { masterPageNames } from './names';
 import { Application } from 'maishu-chitu-react';
 import { MenuItem } from "../website-config";
-import { parseUrl } from "maishu-chitu";
+// import { parseUrl } from "maishu-chitu";
 
 interface State {
     currentPageUrl?: string,
@@ -98,7 +98,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
             if (item == null)
                 throw new Error("item is null")
 
-            let r = parseUrl(pageUrl);
+            let r = this.app.parseUrl(pageUrl);
             if (item.path == `#${pageUrl}` || item.path == `#${r.pageName}`) {
                 return item
             }

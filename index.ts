@@ -3,6 +3,7 @@ import * as path from "path";
 import { pathConcat } from "maishu-toolkit";
 import { errors } from "./errors";
 import * as sc from "maishu-chitu-scaffold";
+import { VirtualDirectory } from "maishu-node-mvc";
 
 /** @param {string} [basePath]  */
 export function getVirtualPaths(basePath?: string, targetPath?: string) {
@@ -28,33 +29,67 @@ export function getVirtualPaths(basePath?: string, targetPath?: string) {
     return staticFilePaths;
 }
 
+/**
+ * 获取指定文件夹的文件相对路径
+ * @param dir 指定的文件夹
+ * @returns 文件的相对路径
+ */
 function getFilePaths(dir: string): { [key: string]: string } {
     if (path.isAbsolute(dir) == false)
         throw errors.notPhysicalPath(dir);
 
     let r: ReturnType<typeof getFilePaths> = {};
     let stack = new Array<string>();
-    stack.push("");
+    stack.push("/");
 
     while (true) {
         let relativePath = stack.pop();
         if (relativePath === undefined)
             break;
 
-        let p = path.join(dir, relativePath);
+        let p = pathConcat(dir, relativePath);
         let names = fs.readdirSync(p);
         for (let i = 0; i < names.length; i++) {
-            let childPhysicalPath = path.join(p, names[i]);
-            if (fs.statSync(childPhysicalPath).isFile()) {
-                r[pathConcat(relativePath, names[i])] = childPhysicalPath;
+
+            let childPhysicalPath = pathConcat(p, names[i]);
+            let childRelativePath = pathConcat(relativePath, names[i]);
+            let state = fs.statSync(childPhysicalPath);
+            if (state.isDirectory()) {
+                stack.push(childRelativePath);
+                continue;
             }
-            else {
-                stack.push(pathConcat(relativePath, names[i]));
+
+            if (state.isFile()) {
+                r[pathConcat(relativePath, names[i])] = childPhysicalPath;
             }
         }
     }
 
     return r;
+}
+
+export function sourceVirtualPaths(rootDirectory: string | VirtualDirectory) {
+
+    let root = typeof rootDirectory == "string" ? new VirtualDirectory(rootDirectory) : rootDirectory;
+
+    let ctVirtualFiles = sc.sourceVirtualPaths(__dirname);
+
+    let staticDir = pathConcat(__dirname, "static");
+    let staticRelativeFiles = getFilePaths(staticDir);
+    let items = Object.getOwnPropertyNames(staticRelativeFiles)
+        .map(o => ({ relativePath: pathConcat("static", o), physicalPath: staticRelativeFiles[o] }));
+
+    let virtualFiles: { [key: string]: string } = {};
+    for (let i = 0; i < items.length; i++) {
+        if (root.findFile(items[i].relativePath))
+            continue;
+
+        virtualFiles[items[i].relativePath] = items[i].physicalPath;
+    }
+
+    virtualFiles = Object.assign({}, ctVirtualFiles, virtualFiles);
+
+    return virtualFiles;
 }
 
 
