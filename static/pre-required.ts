@@ -10,4 +10,4 @@ exports["maishu-dilu"] = require("maishu-dilu");
 exports["maishu-dilu-react"] = require("maishu-dilu-react");
 exports["css"] = require("maishu-requirejs-plugins/src/css");
 exports["text"] = require("maishu-requirejs-plugins/lib/text");
-exports["json"] = require("maishu-requirejs-plugins/src/json");
+// exports["json"] = require("maishu-requirejs-plugins/src/json");

@@ -78,11 +78,14 @@ export class Application extends chitu_react.Application {
         }
     }
 
-    showPage(pageUrl: string, args?: PageData, forceRender?: boolean): Page {
-        args = args || {};
+    showPage(pageUrl: string, forceRender?: boolean): Page {
+        // args = args || {};
         let d = this.parseUrl(pageUrl);
-        args.container = (this._config.containers || {})[d.pageName];
-        return super.showPage(pageUrl, args, forceRender);
+        let container = (this._config.containers || {})[d.pageName];
+        if (pageUrl.indexOf('?') > 0) {
+            pageUrl = pageUrl + `&container=${container}`
+        }
+        return super.showPage(pageUrl, forceRender);
     }
 
     private async onPageCreated(page: Page) {
