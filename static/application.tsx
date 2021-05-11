@@ -78,15 +78,21 @@ export class Application extends chitu_react.Application {
         }
     }
 
-    showPage(pageUrl: string, forceRender?: boolean): Page {
-        // args = args || {};
-        let d = this.parseUrl(pageUrl);
-        let container = (this._config.containers || {})[d.pageName];
-        if (pageUrl.indexOf('?') > 0) {
-            pageUrl = pageUrl + `&container=${container}`
-        }
-        return super.showPage(pageUrl, forceRender);
-    }
+    // showPage(pageUrl: string, forceRender?: boolean): Page {
+    //     // args = args || {};
+    //     let d = this.parseUrl(pageUrl);
+    //     let container = (this._config.containers || {})[d.pageName];
+    //     if (container != null) {
+    //         if (pageUrl.indexOf('?') > 0) {
+    //             pageUrl = pageUrl + `&container=${container}`
+    //         }
+    //         else {
+    //             pageUrl = pageUrl + `?container=${container}`
+    //         }
+    //     }
+
+    //     return super.showPage(pageUrl, forceRender);
+    // }
 
     private async onPageCreated(page: Page) {
         let pageClassName = page.name.split("/").filter(o => o != "").join("-");

@@ -1,9 +1,8 @@
 {
     "dependencies": {
         "font-awesome": "^4.7.0",
-        "maishu-chitu": "^3.40.0",
         "maishu-chitu-react": "^1.30.0",
-        "maishu-chitu-scaffold": "^1.15.0",
+        "maishu-chitu-scaffold": "^1.19.0",
         "maishu-data-page": "^1.0.1",
         "maishu-dilu": "^1.9.1",
         "maishu-dilu-react": "^1.4.0",
@@ -32,5 +31,5 @@
         "node-sass": "^5.0.0"
     },
     "name": "maishu-admin-scaffold",
-    "version": "1.8.0"
+    "version": "1.9.0"
 }
