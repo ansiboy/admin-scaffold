@@ -91,6 +91,10 @@ export class MainMasterPage extends MasterPage<State, Props> {
     }
 
     findMenuItemByPageUrl(menuItems: MenuItem[], pageUrl: string) {
+        let sharpIndex = pageUrl.indexOf('#');
+        if (pageUrl.indexOf('#') >= 0) {
+            pageUrl = pageUrl.substr(sharpIndex + 1);
+        }
         let stack = new Array<MenuItem>()
         stack.push(...menuItems)
         while (stack.length > 0) {
