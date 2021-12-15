@@ -162,7 +162,18 @@ export class Application extends chitu_react.Application {
         return req;
     }
 
+    redirect(path: string) {
+        if (path.startsWith("./") && location.hash.length > 1) {
+            let currentPath = location.hash.substr(1);
+            let arr = currentPath.split("/");
+            arr.pop();
+            let parentPath = arr.join("/");
+            path = pathConcat(parentPath, path);
+        }
 
+        let r = super.redirect(path);
+        return r;
+    }
 }
 
 export function run(config: WebsiteConfig, req) {
