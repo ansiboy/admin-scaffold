@@ -1,12 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sourceVirtualPaths = exports.getVirtualPaths = void 0;
+exports.getVirtualPaths = void 0;
 const fs = require("fs");
 const path = require("path");
 const maishu_toolkit_1 = require("maishu-toolkit");
 const errors_1 = require("./errors");
 const sc = require("maishu-chitu-scaffold");
-const maishu_node_mvc_1 = require("maishu-node-mvc");
 /** @param {string} [basePath]  */
 function getVirtualPaths(basePath, targetPath) {
     let existsFilePaths = {};
@@ -61,20 +60,19 @@ function getFilePaths(dir) {
     }
     return r;
 }
-function sourceVirtualPaths(rootDirectory) {
-    let root = typeof rootDirectory == "string" ? new maishu_node_mvc_1.VirtualDirectory(rootDirectory) : rootDirectory;
-    let ctVirtualFiles = sc.sourceVirtualPaths(__dirname);
-    let staticDir = maishu_toolkit_1.pathConcat(__dirname, "static");
-    let staticRelativeFiles = getFilePaths(staticDir);
-    let items = Object.getOwnPropertyNames(staticRelativeFiles)
-        .map(o => ({ relativePath: maishu_toolkit_1.pathConcat("static", o), physicalPath: staticRelativeFiles[o] }));
-    let virtualFiles = {};
-    for (let i = 0; i < items.length; i++) {
-        if (root.findFile(items[i].relativePath))
-            continue;
-        virtualFiles[items[i].relativePath] = items[i].physicalPath;
-    }
-    virtualFiles = Object.assign({}, ctVirtualFiles, virtualFiles);
-    return virtualFiles;
-}
-exports.sourceVirtualPaths = sourceVirtualPaths;
+// export function sourceVirtualPaths(rootDirectory: string | VirtualDirectory) {
+//     let root = typeof rootDirectory == "string" ? new VirtualDirectory(rootDirectory) : rootDirectory;
+//     let ctVirtualFiles = sc.sourceVirtualPaths(__dirname);
+//     let staticDir = pathConcat(__dirname, "static");
+//     let staticRelativeFiles = getFilePaths(staticDir);
+//     let items = Object.getOwnPropertyNames(staticRelativeFiles)
+//         .map(o => ({ relativePath: pathConcat("static", o), physicalPath: staticRelativeFiles[o] }));
+//     let virtualFiles: { [key: string]: string } = {};
+//     for (let i = 0; i < items.length; i++) {
+//         if (root.findFile(items[i].relativePath))
+//             continue;
+//         virtualFiles[items[i].relativePath] = items[i].physicalPath;
+//     }
+//     virtualFiles = Object.assign({}, ctVirtualFiles, virtualFiles);
+//     return virtualFiles;
+// }

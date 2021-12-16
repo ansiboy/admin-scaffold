@@ -8,8 +8,8 @@ import { SimpleMasterPage } from "./masters/simple-master-page";
 import { MainMasterPage } from "./masters/main-master-page";
 import { WebsiteConfig } from "./website-config";
 
-import "./content/bootstrap.css";
-import "./content/admin_style_default.less";
+// import "./content/bootstrap.css";
+// import "./content/admin_style_default.less";
 import "node_modules/font-awesome/css/font-awesome.css";
 import { pathConcat } from 'maishu-toolkit';
 
@@ -46,6 +46,8 @@ export class Application extends chitu_react.Application {
 
         this.error.add((sender, error) => errorHandle(error));
         this.pageCreated.add((sender, page) => this.onPageCreated(page));
+
+        this.pageContainers = config.containers;
 
         ReactDOM.render(<SimpleMasterPage app={this} ref={e => this._simpleMaster = e || this._simpleMaster} />, simpleContainer);
         ReactDOM.render(<MainMasterPage app={this} menuItems={this._config.menuItems}

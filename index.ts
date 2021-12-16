@@ -3,7 +3,6 @@ import * as path from "path";
 import { pathConcat } from "maishu-toolkit";
 import { errors } from "./errors";
 import * as sc from "maishu-chitu-scaffold";
-import { VirtualDirectory } from "maishu-node-mvc";
 
 /** @param {string} [basePath]  */
 export function getVirtualPaths(basePath?: string, targetPath?: string) {
@@ -68,28 +67,28 @@ function getFilePaths(dir: string): { [key: string]: string } {
     return r;
 }
 
-export function sourceVirtualPaths(rootDirectory: string | VirtualDirectory) {
+// export function sourceVirtualPaths(rootDirectory: string | VirtualDirectory) {
 
-    let root = typeof rootDirectory == "string" ? new VirtualDirectory(rootDirectory) : rootDirectory;
+//     let root = typeof rootDirectory == "string" ? new VirtualDirectory(rootDirectory) : rootDirectory;
 
-    let ctVirtualFiles = sc.sourceVirtualPaths(__dirname);
+//     let ctVirtualFiles = sc.sourceVirtualPaths(__dirname);
 
-    let staticDir = pathConcat(__dirname, "static");
-    let staticRelativeFiles = getFilePaths(staticDir);
-    let items = Object.getOwnPropertyNames(staticRelativeFiles)
-        .map(o => ({ relativePath: pathConcat("static", o), physicalPath: staticRelativeFiles[o] }));
+//     let staticDir = pathConcat(__dirname, "static");
+//     let staticRelativeFiles = getFilePaths(staticDir);
+//     let items = Object.getOwnPropertyNames(staticRelativeFiles)
+//         .map(o => ({ relativePath: pathConcat("static", o), physicalPath: staticRelativeFiles[o] }));
 
-    let virtualFiles: { [key: string]: string } = {};
-    for (let i = 0; i < items.length; i++) {
-        if (root.findFile(items[i].relativePath))
-            continue;
+//     let virtualFiles: { [key: string]: string } = {};
+//     for (let i = 0; i < items.length; i++) {
+//         if (root.findFile(items[i].relativePath))
+//             continue;
 
-        virtualFiles[items[i].relativePath] = items[i].physicalPath;
-    }
+//         virtualFiles[items[i].relativePath] = items[i].physicalPath;
+//     }
 
-    virtualFiles = Object.assign({}, ctVirtualFiles, virtualFiles);
+//     virtualFiles = Object.assign({}, ctVirtualFiles, virtualFiles);
 
-    return virtualFiles;
-}
+//     return virtualFiles;
+// }
 
 

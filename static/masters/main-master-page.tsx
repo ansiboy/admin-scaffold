@@ -4,6 +4,23 @@ import { masterPageNames } from './names';
 import { Application } from 'maishu-chitu-react';
 import { MenuItem } from "../website-config";
 // import { parseUrl } from "maishu-chitu";
+import { Layout, Menu } from "antd";
+import "antd/dist/antd.css";
+import "./main-master-page.less";
+
+import {
+    AppstoreOutlined,
+    BarChartOutlined,
+    CloudOutlined,
+    ShopOutlined,
+    TeamOutlined,
+    UserOutlined,
+    UploadOutlined,
+    VideoCameraOutlined,
+} from '@ant-design/icons';
+// import MenuItem from "antd/lib/menu/MenuItem";
+
+const { Header, Content, Footer, Sider } = Layout;
 
 interface State {
     currentPageUrl?: string,
@@ -180,44 +197,103 @@ export class MainMasterPage extends MasterPage<State, Props> {
             hideSecond = true;
         }
 
-        return <>
-            <div className="first" style={{ display: hideFirst ? "none" : "" }}>
-                <ul className="list-group">
-                    {firstLevelNodes.map((o, i) =>
-                        <li key={i} className={o == firstLevelNode ? "list-group-item active" : "list-group-item"}
-                            style={{ cursor: 'pointer', display: o.type != "menu" ? "none" : '' }}
-                            onClick={() => this.showPageByNode(o)}>
-                            {o.type == "spliter" ? <hr /> : <> <i className={o.icon}></i>
-                                <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span></>}
-                        </li>
-                    )}
-                </ul>
-            </div>
-            <div className="second" style={{ display: hideSecond ? "none" : "" }}>
-                <ul className="list-group">
-                    {(firstLevelNode ? (firstLevelNode.children || []) : []).filter(o => o.type == "menu" || o.type == "spliter").map((o, i) =>
-                        <li key={i} className={o == secondLevelNode ? "list-group-item active" : "list-group-item"}
-                            style={{ cursor: o.type == "menu" ? 'pointer' : null }}
-                            page-url={o.path}
-                            onClick={() => this.showPageByNode(o)}>
-                            {o.type == "menu" ? <>
-                                <i className={o.icon}></i>
-                                <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span></> :
-                                <hr />}
-                        </li>
-                    )}
-                </ul>
-            </div>
-            <div className="main">
-                <nav className="navbar navbar-default">
-                    {this.state.toolbar}
-                </nav>
-                <div className={`page-container page-placeholder`}
-                    ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
-                </div>
-            </div>
+        // return <>
+        //     <div className="first" style={{ display: hideFirst ? "none" : "" }}>
+        //         <ul className="list-group">
+        //             {firstLevelNodes.map((o, i) =>
+        //                 <li key={i} className={o == firstLevelNode ? "list-group-item active" : "list-group-item"}
+        //                     style={{ cursor: 'pointer', display: o.type != "menu" ? "none" : '' }}
+        //                     onClick={() => this.showPageByNode(o)}>
+        //                     {o.type == "spliter" ? <hr /> : <> <i className={o.icon}></i>
+        //                         <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span></>}
+        //                 </li>
+        //             )}
+        //         </ul>
+        //     </div>
+        //     <div className="second" style={{ display: hideSecond ? "none" : "" }}>
+        //         <ul className="list-group">
+        //             {(firstLevelNode ? (firstLevelNode.children || []) : []).filter(o => o.type == "menu" || o.type == "spliter").map((o, i) =>
+        //                 <li key={i} className={o == secondLevelNode ? "list-group-item active" : "list-group-item"}
+        //                     style={{ cursor: o.type == "menu" ? 'pointer' : null }}
+        //                     page-url={o.path}
+        //                     onClick={() => this.showPageByNode(o)}>
+        //                     {o.type == "menu" ? <>
+        //                         <i className={o.icon}></i>
+        //                         <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span></> :
+        //                         <hr />}
+        //                 </li>
+        //             )}
+        //         </ul>
+        //     </div>
+        //     <div className="main">
+        //         <nav className="navbar navbar-default">
+        //             {this.state.toolbar}
+        //         </nav>
+        //         <div className={`page-container page-placeholder`}
+        //             ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
+        //         </div>
+        //     </div>
 
-        </>
+        // </>
+        // return <>
+        //     <div className={`page-container page-placeholder`}
+        //         ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
+        //     </div>
+        // </>
+
+        return <Layout>
+            <Sider style={{
+                overflow: 'auto',
+                height: '100vh',
+                position: 'fixed',
+                left: 0,
+            }}
+            >
+                <div className="logo" >
+                    Gemwon
+                </div>
+
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
+                    {firstLevelNodes.map(n => <Menu.Item icon={n.icon ? <i className={n.icon} /> : null}>
+                        {n.name}
+                    </Menu.Item>)}
+
+                    <Menu.Item key="1" icon={<UserOutlined />}>
+                        nav 1
+                    </Menu.Item>
+                    <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+                        nav 2
+                    </Menu.Item>
+                    <Menu.Item key="3" icon={<UploadOutlined />}>
+                        nav 3
+                    </Menu.Item>
+                    <Menu.Item key="4" icon={<BarChartOutlined />}>
+                        nav 4
+                    </Menu.Item>
+                    <Menu.Item key="5" icon={<CloudOutlined />}>
+                        nav 5
+                    </Menu.Item>
+                    <Menu.Item key="6" icon={<AppstoreOutlined />}>
+                        nav 6
+                    </Menu.Item>
+                    <Menu.Item key="7" icon={<TeamOutlined />}>
+                        nav 7
+                    </Menu.Item>
+                    <Menu.Item key="8" icon={<ShopOutlined />}>
+                        nav 8
+                    </Menu.Item>
+                </Menu>
+            </Sider>
+            <Layout className="site-layout" style={{ marginLeft: 200 }}>
+                <Header className="site-layout-background" style={{ padding: 0 }} />
+                <Content style={{ margin: '1', overflow: 'initial', backgroundColor: 'white' }}>
+                    <div className={`page-container page-placeholder`}
+                        ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
+                    </div>
+                </Content>
+                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+            </Layout>
+        </Layout>
 
     }
 }

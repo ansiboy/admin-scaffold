@@ -27,7 +27,13 @@ export interface WebsiteConfig extends BaseWebsiteConfig {
 
 let websiteConfig: WebsiteConfig = {
     requirejs: {
+        shim: {
+        },
         paths: {
+            "antd": "node_modules/antd/dist/antd.min",
+            "antd/dist": "node_modules/antd/dist",
+            "moment": "node_modules/moment/min/moment.min",
+            "@ant-design/icons": "node_modules/@ant-design/icons/dist/index.umd",
         }
     },
     containers: {
