@@ -30,7 +30,7 @@
         "mocha": "^8.3.0",
         "node-sass": "^5.0.0"
     },
-    "name": "maishu-admin-scaffold",
+    "name": "maishu-admin-antd",
     "version": "1.13.1",
     "scripts": {
         "start": "node-mvc ./demo"
