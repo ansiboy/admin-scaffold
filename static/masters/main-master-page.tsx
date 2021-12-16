@@ -18,9 +18,11 @@ import {
     UploadOutlined,
     VideoCameraOutlined,
 } from '@ant-design/icons';
+// import SubMenu from "antd/lib/menu/SubMenu";
 // import MenuItem from "antd/lib/menu/MenuItem";
 
 const { Header, Content, Footer, Sider } = Layout;
+const { SubMenu } = Menu;
 
 interface State {
     currentPageUrl?: string,
@@ -148,6 +150,23 @@ export class MainMasterPage extends MasterPage<State, Props> {
         })
     }
 
+    renderMenuItem(menuItem: MenuItem) {
+        let children = (menuItem.children || []).filter(o => !o.hidden && o.name);
+        if (children.length == 0) {
+            return <Menu.Item key={menuItem.id} icon={menuItem.icon ? <i className={menuItem.icon} /> : null}
+                onClick={() => {
+                    if (menuItem.path)
+                        location.href = menuItem.path;
+                }}  >
+                {menuItem.name}
+            </Menu.Item >
+        }
+
+        return <Menu.SubMenu key={menuItem.id} title={menuItem.name} icon={menuItem.icon ? <i className={menuItem.icon} /> : null}>
+            {children.map(c => this.renderMenuItem(c))}
+        </Menu.SubMenu>
+    }
+
     render() {
         let { menuItems } = this.state;
         let currentPageUrl: string = this.state.currentPageUrl || '';
@@ -241,27 +260,32 @@ export class MainMasterPage extends MasterPage<State, Props> {
         //     </div>
         // </>
 
+        let openKeys: string[] = [];
+        let p = currentNode?.parent;
+        while (p) {
+            openKeys.push(p.id);
+            p = p.parent;
+        }
+
         return <Layout>
-            <Sider style={{
-                overflow: 'auto',
-                height: '100vh',
-                position: 'fixed',
-                left: 0,
-            }}
-            >
+            <Sider collapsible style={{ position: "fixed", height: "100%" }} >
                 <div className="logo" >
                     Gemwon
                 </div>
-
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
-                    {firstLevelNodes.map(n => <Menu.Item icon={n.icon ? <i className={n.icon} /> : null}>
-                        {n.name}
-                    </Menu.Item>)}
-
-                    <Menu.Item key="1" icon={<UserOutlined />}>
+                <Menu theme="dark" mode="inline" selectedKeys={currentNode ? [currentNode.id] : []} openKeys={openKeys}>
+                    {firstLevelNodes.filter(o => !o.hidden).map(n => this.renderMenuItem(n))}
+                    <Menu.Item key="1" icon={<UserOutlined />} >
                         nav 1
+                        <Menu.Item key="11" icon={<VideoCameraOutlined />}>
+                            nav 1-1
+                        </Menu.Item>
+                        <Menu.Item key="11" icon={<VideoCameraOutlined />}>
+                            nav 1-2
+                        </Menu.Item>
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+                    <Menu.Item key="2" icon={<VideoCameraOutlined />} onClick={e => {
+                        debugger;
+                    }}>
                         nav 2
                     </Menu.Item>
                     <Menu.Item key="3" icon={<UploadOutlined />}>
@@ -291,7 +315,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
                         ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
             </Layout>
         </Layout>
 
