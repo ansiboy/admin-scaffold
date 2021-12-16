@@ -37,6 +37,7 @@ interface State {
 
 interface Props extends MasterPageProps {
     menuItems: MenuItem[],
+    currentPageUrl: string,
 }
 
 
@@ -50,7 +51,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
     constructor(props: Props) {
         super(props);
 
-        this.state = { menuItems: this.props.menuItems, username: "" }
+        this.state = { menuItems: this.props.menuItems, username: "", currentPageUrl: props.currentPageUrl }
 
         this.app = props.app;
     }
@@ -169,8 +170,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
 
     render() {
         let { menuItems } = this.state;
-        let currentPageUrl: string = this.state.currentPageUrl || '';
-
+        let currentPageUrl: string = this.state.currentPageUrl;
         let firstLevelNodes = menuItems.filter(o => o.type == "menu");
         let currentNode: MenuItem | null | undefined
         if (this.state.resourceId) {
@@ -260,9 +260,12 @@ export class MainMasterPage extends MasterPage<State, Props> {
         //     </div>
         // </>
 
-        let openKeys: string[] = [];
+        let openKeys: string[] = undefined;
         let p = currentNode?.parent;
         while (p) {
+            if (openKeys == null)
+                openKeys = [];
+
             openKeys.push(p.id);
             p = p.parent;
         }
@@ -272,7 +275,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
                 <div className="logo" >
                     Gemwon
                 </div>
-                <Menu theme="dark" mode="inline" selectedKeys={currentNode ? [currentNode.id] : []} openKeys={openKeys}>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={currentNode ? [currentNode.id] : []} defaultOpenKeys={openKeys}>
                     {firstLevelNodes.filter(o => !o.hidden).map(n => this.renderMenuItem(n))}
                     <Menu.Item key="1" icon={<UserOutlined />} >
                         nav 1
@@ -317,7 +320,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
                 </Content>
                 {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
             </Layout>
-        </Layout>
+        </Layout >
 
     }
 }
