@@ -48,7 +48,7 @@ export class Application extends chitu_react.Application {
         this.pageCreated.add((sender, page) => this.onPageCreated(page));
 
         ReactDOM.render(<SimpleMasterPage app={this} ref={e => this._simpleMaster = e || this._simpleMaster} />, simpleContainer);
-        ReactDOM.render(<MainMasterPage app={this} menuItems={this._config.menuItems}
+        ReactDOM.render(<MainMasterPage app={this} menuItems={this._config.menuItems} currentPageUrl={location.href}
             ref={e => this._mainMaster = e || this._mainMaster} />, mainContainer);
     }
 
