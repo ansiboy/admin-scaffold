@@ -31,7 +31,7 @@
         "node-sass": "^5.0.0"
     },
     "name": "maishu-admin-antd",
-    "version": "1.13.1",
+    "version": "1.0.0",
     "scripts": {
         "start": "node-mvc ./demo"
     }
