@@ -30,5 +30,8 @@
         "node-sass": "^5.0.0"
     },
     "name": "maishu-admin-scaffold",
-    "version": "1.13.1"
+    "version": "1.13.1",
+    "scripts": {
+        "start": "node-mvc ./demo"
+    }
 }

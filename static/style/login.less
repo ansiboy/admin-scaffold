@@ -1,0 +1,270 @@
+.list-style {
+    margin: 0;
+    padding: 0;
+    list-style: none outside;
+}
+.login-box {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    background: linear-gradient(to right, #30beff, #30beff);
+
+    .login-main {
+        width: 100%;
+        height: 100%;
+        display: block;
+        background: url(../images/loginbg.png);
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .login-con {
+            width: 1148px;
+            height: 800px;
+            background: url(../images/loginbg1.gif) no-repeat left top #fff;
+            background-size: auto 100%;
+            border-radius: 20px;
+            box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+
+            .login-con-info {
+                width: 100%;
+                height: 550px;
+
+                .login-left {
+                    width: 50%;
+                    height: auto;
+                    float: left;
+                    overflow: hidden;
+
+                    .logo {
+                        padding: 0 0 69px 84px;
+                        width: 100%;
+                        height: auto;
+                        float: left;
+                        box-sizing: border-box;
+
+                        img {
+                            width: auto;
+                            max-height: 42px;
+                        }
+                    }
+
+                    .login-pic {
+                        padding-left: 84px;
+                        width: 100%;
+                        height: auto;
+                        float: left;
+                        box-sizing: border-box;
+
+                        img {
+                            max-width: 390px;
+                            height: auto;
+                        }
+                    }
+                }
+
+                .login-right {
+                    width: 50%;
+                    height: auto;
+                    float: left;
+
+                    .login-form {
+                        padding: 0 170px 0 54px;
+                        width: 100%;
+                        height: auto;
+                        float: left;
+                        box-sizing: border-box;
+
+                        .form-title {
+                            width: 100%;
+                            height: 65px;
+                            font-size: 24px;
+                            line-height: 26px;
+                            float: left;
+                        }
+                        .form-con {
+                            width: 100%;
+                            height: auto;
+                            float: left;
+                            &.login{
+                                padding-top: 70px;
+                            }
+                            ul{
+                                .list-style();
+                                li{
+                                    .list-style();
+                                    width: 100%;
+                                    height: auto;
+                                    float: left;
+                                    .item-title{
+                                        width: 100%;
+                                        height: 29px;
+                                        float: left;
+                                    }
+                                    .itme-input{
+                                        width: 100%;
+                                        height: auto;
+                                        float: left;
+                                        position: relative;
+                                        z-index: 0;
+                                        input{
+                                            padding: 8px 34px 8px 15px;
+                                            width: 100%;
+                                            float: left;
+                                            border: 1px solid #d2d2d2;
+                                            border-radius: 4px;
+                                            &:focus{
+                                                border: 1px solid #00a0e9;
+                                                outline: none;
+                                            }
+                                        }                                        
+                                        i{                                            
+                                            width: 34px;
+                                            height: 40px;                                            
+                                            font-size: 14px;
+                                            position: absolute;
+                                            right: 0;
+                                            top: 0;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+
+                                            .icon-success{
+                                                color: #52c41a;
+                                                display: none;
+                                            }
+                                            .icon-failure{
+                                                color: #f5222d;
+                                                display: none;
+                                            }
+                                        }
+                                        button{
+                                            padding: 0 15px;
+                                            width: auto;
+                                            height: 40px;
+                                            line-height: 40px;
+                                            color: #1890ff;
+                                            font-size: 14px;
+                                            position: absolute;
+                                            right: 0;
+                                            top: 0;
+                                            border: none;
+                                            background: none;
+                                            &:disabled{
+                                                cursor: not-allowed;
+                                                color: #999;
+                                            }
+                                        }
+                                    }
+                                    .tips{
+                                        padding-top: 0px;
+                                        width: 100%;
+                                        min-height: 16px;
+                                        float: left;
+                                    }
+                                    &.error{
+                                        input{
+                                            border: 1px solid #f5222d;                                            
+                                        }
+                                        i{ 
+                                            .icon-failure{
+                                                display: block;
+                                            }
+                                        }
+                                    }
+                                    &.yes{
+                                        i{ 
+                                            .icon-success{
+                                                display: block;
+                                            }
+                                        }
+                                    }
+                                    .forget{
+                                        padding-top: 6px;
+                                        width: 100%;
+                                        height: auto;
+                                        text-align: right;
+                                        float: left;
+                                    }
+                                    &.inputbtn{
+                                        padding-top: 30px;
+                                        button{
+                                            padding-top: 13px;
+                                            padding-bottom: 13px;
+                                            width: 100%;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @media (max-width: 1366px) {
+                width: 80%;
+                height: 90%;
+
+                .login-con-info {
+                    width: 100%;
+                    height: 550px;
+
+                    .login-right {
+                        width: 50%;
+                        height: auto;
+                        float: left;
+
+                        .login-form {
+                            padding: 0 54px 0 54px;
+                            width: 100%;
+                            height: auto;
+                            float: left;
+                            box-sizing: border-box;
+                        }
+                    }
+                }
+            }
+
+            @media (max-width: 992px) {
+                width: 90%;
+                height: 95%;
+                background: #fff;
+                .login-con-info {
+                    width: 100%;
+                    height: 100%;
+
+                    .login-left {
+                        display: none;
+                    }
+
+                    .login-right {
+                        width: 100%;
+                        height: auto;
+                        float: left;
+
+                        .login-form {
+                            padding: 32px 25px 0 25px;
+                            width: 100%;
+                            height: auto;
+                            float: left;
+                            box-sizing: border-box;
+                            .form-con {
+                                &.login{
+                                    padding-top: 0px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

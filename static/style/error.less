@@ -1,0 +1,183 @@
+.error-body {
+    padding: 10px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; 
+    box-sizing: border-box;
+    overflow: hidden;
+    @media (max-width: 992px) {
+        padding: 0;
+    }
+    .error-layout {
+        flex-grow: 1;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        background: #fff;
+        border-radius: 4px;
+
+        .error-main {
+            width: auto;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+
+            .error-pic {
+                width: auto;
+                height: auto;
+                flex-grow: 1;
+
+                img {
+                    max-width: 100%;
+                    height: auto;
+                }
+            }
+
+            .error-con {
+                padding-left: 100px;
+                width: 175px;
+                height: auto;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                flex-wrap: wrap;
+                flex-grow: 1;
+
+                .error-title {
+                    width: 100%;
+                    flex-grow: 1;
+                    font-size: 60px;
+                    color: #545456;
+                    line-height: 62px;
+                    white-space: nowrap;
+                }
+
+                .error-subtitle {
+                    width: 100%;
+                    flex-grow: 1;
+                    font-size: 14px;
+                    color: #999;
+                    line-height: 16px;
+                    white-space: nowrap;
+                }
+
+                .error-btn {
+                    padding-top: 30px;
+                    min-width: 200px;
+                    flex-grow: 1;
+
+                    a {
+                        width: 137px;
+                        height: 40px;
+                        background: #1890ff;
+                        color: #fff;
+                        line-height: 40px;
+                        text-align: center;
+                        font-size: 14px;
+                        border-radius: 4px;
+                        display: inline-block;
+
+                        &:hover {
+                            opacity: 0.8;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1150px) {
+        .error-layout {
+            padding: 100px 0;
+            width: 100%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            background: #fff;
+            border-radius: 4px;
+            float: left;
+
+            .error-main {
+                width: auto;
+                height: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-wrap: wrap;
+
+                .error-pic {
+                    width: 100%;
+                    height: auto;
+                    text-align: center;
+                    flex-grow: 1;
+
+                    img {
+                        max-width: 100%;
+                        height: auto;
+                    }
+                }
+
+                .error-con {
+                    padding-left: 0px;
+                    margin-top: 50px;
+                    width: 100%;
+                    height: auto;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    flex-grow: 1;
+
+                    .error-title {
+                        width: 100%;
+                        flex-grow: 1;
+                        font-size: 60px;
+                        color: #545456;
+                        line-height: 62px;
+                        white-space: nowrap;
+                        text-align: center;
+                    }
+
+                    .error-subtitle {
+                        width: 100%;
+                        flex-grow: 1;
+                        font-size: 14px;
+                        color: #999;
+                        line-height: 16px;
+                        white-space: nowrap;
+                        text-align: center;
+                    }
+
+                    .error-btn {
+                        padding-top: 30px;
+                        min-width: 200px;
+                        flex-grow: 1;
+                        text-align: center;
+
+                        a {
+                            width: 137px;
+                            height: 40px;
+                            background: #1890ff;
+                            color: #fff;
+                            line-height: 40px;
+                            text-align: center;
+                            font-size: 14px;
+                            border-radius: 4px;
+                            display: inline-block;
+
+                            &:hover {
+                                opacity: 0.8;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

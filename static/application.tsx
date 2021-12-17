@@ -8,8 +8,8 @@ import { SimpleMasterPage } from "./masters/simple-master-page";
 import { MainMasterPage } from "./masters/main-master-page";
 import { WebsiteConfig } from "./website-config";
 
-import "./content/bootstrap.css";
-import "./content/admin_style_default.less";
+// import "./content/bootstrap.css";
+// import "./content/admin_style_default.less";
 import "node_modules/font-awesome/css/font-awesome.css";
 import { pathConcat } from 'maishu-toolkit';
 
