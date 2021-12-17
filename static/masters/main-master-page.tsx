@@ -101,7 +101,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
     }
 
     render() {
-        let { menuItems } = this.state;
+        let { menuItems, toolbar } = this.state;
         let currentPageUrl: string = this.state.currentPageUrl || '';
 
         let firstLevelNodes = menuItems.filter(o => o.type == "menu");
@@ -117,49 +117,9 @@ export class MainMasterPage extends MasterPage<State, Props> {
 
         return <>
             <header>
-                <div className="logo"><a href="#"><img src="images/logo.png" /></a></div>
+                <div className="logo"><a href="/"><img src="images/logo.png" /></a></div>
                 <div className="header-right">
-                    <div className="notice">
-                        <a href="#">
-                            <div className="bage">
-                                <i><span className="icon-message"></span></i>
-                                <span className="num">10</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="header-account">
-                        <div className="account-info"><img src="images/face.gif" />Deng Xiao Li</div>
-                        <div className="header-dropdown-menu">
-                            <div className="dropdown-menu-con">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <i><span className="icon-user1"></span></i>
-                                            <span>My Account</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i><span className="icon-settings"></span></i>
-                                            <span>Settings</span>
-                                        </a>
-                                    </li>
-                                    <li className="logout">
-                                        <a href="#">
-                                            <i><span className="icon-logout"></span></i>
-                                            <span>Log out</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="trigger">
-                        <i>
-                            <span className="icon-menu-close svg1"></span>
-                            <span className="icon-menu-open svg2"></span>
-                        </i>
-                    </div>
+                    {toolbar}
                 </div>
             </header>
             <aside>
