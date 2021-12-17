@@ -171,7 +171,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
     }
 
     render() {
-        let { menuItems, resourceId, mainLayerLeftMargin } = this.state;
+        let { menuItems, resourceId, mainLayerLeftMargin, toolbar } = this.state;
         let currentPageUrl: string = this.state.currentPageUrl;
         let firstLevelNodes = menuItems.filter(o => o.type == "menu");
         let currentNode: MenuItem | null | undefined
@@ -198,11 +198,12 @@ export class MainMasterPage extends MasterPage<State, Props> {
             p = p.parent;
         }
 
-        return <Layout>
-            <Header className="site-layout-background" style={{ padding: 0 }} >
-                <div className="logo" >
+        return <Layout className="master-page" >
+            <Header >
+                <div className="logo" style={{ width: SiderWidth }} >
                     Gemwon
                 </div>
+                <div className="toolbar">{toolbar}</div>
             </Header>
             <Layout>
                 <Sider collapsible width={SiderWidth} collapsedWidth={SiderCollapsedWidth} style={{ position: "fixed", height: "100%" }}
