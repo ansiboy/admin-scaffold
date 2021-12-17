@@ -3,7 +3,6 @@ import { MasterPage, MasterPageProps } from './master-page';
 import { masterPageNames } from './names';
 import { Application } from 'maishu-chitu-react';
 import { MenuItem } from "../website-config";
-// import { parseUrl } from "maishu-chitu";
 import { Layout, Menu } from "antd";
 import "antd/dist/antd.css";
 import "./main-master-page.less";
@@ -33,6 +32,7 @@ interface State {
     hideMenuPages?: string[],
     username?: string,
     roleName?: string,
+    mainLayerLeftMargin: number,
 }
 
 interface Props extends MasterPageProps {
@@ -40,6 +40,8 @@ interface Props extends MasterPageProps {
     currentPageUrl: string,
 }
 
+const SiderWidth = 180;
+const SiderCollapsedWidth = 50;
 
 export class MainMasterPage extends MasterPage<State, Props> {
 
@@ -51,7 +53,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
     constructor(props: Props) {
         super(props);
 
-        this.state = { menuItems: this.props.menuItems, username: "", currentPageUrl: props.currentPageUrl }
+        this.state = { menuItems: this.props.menuItems, username: "", currentPageUrl: props.currentPageUrl, mainLayerLeftMargin: SiderWidth }
 
         this.app = props.app;
     }
@@ -169,12 +171,12 @@ export class MainMasterPage extends MasterPage<State, Props> {
     }
 
     render() {
-        let { menuItems } = this.state;
+        let { menuItems, resourceId, mainLayerLeftMargin } = this.state;
         let currentPageUrl: string = this.state.currentPageUrl;
         let firstLevelNodes = menuItems.filter(o => o.type == "menu");
         let currentNode: MenuItem | null | undefined
-        if (this.state.resourceId) {
-            currentNode = this.findMenuItemByResourceId(firstLevelNodes, this.state.resourceId)
+        if (resourceId) {
+            currentNode = this.findMenuItemByResourceId(firstLevelNodes, resourceId)
         }
         else if (currentPageUrl) {
 
@@ -185,80 +187,6 @@ export class MainMasterPage extends MasterPage<State, Props> {
                 currentNode = this.findMenuItemByPageUrl(firstLevelNodes, shortUrl);
             }
         }
-        let firstLevelNode: MenuItem | null = null;
-        let secondLevelNode: MenuItem;
-
-        if (currentNode != null) {
-            if (currentNode.parent == null) {
-                firstLevelNode = currentNode
-            }
-            else if (currentNode.parent.parent == null) {   //二级菜单
-                firstLevelNode = currentNode.parent
-                secondLevelNode = currentNode
-            }
-            else if (currentNode.parent.parent.parent == null) {   //三级菜单
-                firstLevelNode = currentNode.parent.parent
-                secondLevelNode = currentNode.parent
-            }
-        }
-
-        let hideFirst = false;
-        let hideSecond = false;
-        let nodeClassName = '';
-        let hideMenuPages = this.state.hideMenuPages || []
-        if (hideMenuPages.indexOf(currentPageUrl) >= 0) {
-            nodeClassName = 'hideFirst';
-            hideFirst = true;
-            hideSecond = true;
-        }
-        else if (firstLevelNode == null || (firstLevelNode.children || []).filter(o => o.type == "menu" && (o.hidden != true)).length == 0) {
-            nodeClassName = 'hideSecond';
-            hideSecond = true;
-        }
-
-        // return <>
-        //     <div className="first" style={{ display: hideFirst ? "none" : "" }}>
-        //         <ul className="list-group">
-        //             {firstLevelNodes.map((o, i) =>
-        //                 <li key={i} className={o == firstLevelNode ? "list-group-item active" : "list-group-item"}
-        //                     style={{ cursor: 'pointer', display: o.type != "menu" ? "none" : '' }}
-        //                     onClick={() => this.showPageByNode(o)}>
-        //                     {o.type == "spliter" ? <hr /> : <> <i className={o.icon}></i>
-        //                         <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span></>}
-        //                 </li>
-        //             )}
-        //         </ul>
-        //     </div>
-        //     <div className="second" style={{ display: hideSecond ? "none" : "" }}>
-        //         <ul className="list-group">
-        //             {(firstLevelNode ? (firstLevelNode.children || []) : []).filter(o => o.type == "menu" || o.type == "spliter").map((o, i) =>
-        //                 <li key={i} className={o == secondLevelNode ? "list-group-item active" : "list-group-item"}
-        //                     style={{ cursor: o.type == "menu" ? 'pointer' : null }}
-        //                     page-url={o.path}
-        //                     onClick={() => this.showPageByNode(o)}>
-        //                     {o.type == "menu" ? <>
-        //                         <i className={o.icon}></i>
-        //                         <span menu-id={o.id} sort-number={o.sortNumber}>{o.name}</span></> :
-        //                         <hr />}
-        //                 </li>
-        //             )}
-        //         </ul>
-        //     </div>
-        //     <div className="main">
-        //         <nav className="navbar navbar-default">
-        //             {this.state.toolbar}
-        //         </nav>
-        //         <div className={`page-container page-placeholder`}
-        //             ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
-        //         </div>
-        //     </div>
-
-        // </>
-        // return <>
-        //     <div className={`page-container page-placeholder`}
-        //         ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
-        //     </div>
-        // </>
 
         let openKeys: string[] = undefined;
         let p = currentNode?.parent;
@@ -271,54 +199,31 @@ export class MainMasterPage extends MasterPage<State, Props> {
         }
 
         return <Layout>
-            <Sider collapsible style={{ position: "fixed", height: "100%" }} >
+            <Header className="site-layout-background" style={{ padding: 0 }} >
                 <div className="logo" >
                     Gemwon
                 </div>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={currentNode ? [currentNode.id] : []} defaultOpenKeys={openKeys}>
-                    {firstLevelNodes.filter(o => !o.hidden).map(n => this.renderMenuItem(n))}
-                    <Menu.Item key="1" icon={<UserOutlined />} >
-                        nav 1
-                        <Menu.Item key="11" icon={<VideoCameraOutlined />}>
-                            nav 1-1
-                        </Menu.Item>
-                        <Menu.Item key="11" icon={<VideoCameraOutlined />}>
-                            nav 1-2
-                        </Menu.Item>
-                    </Menu.Item>
-                    <Menu.Item key="2" icon={<VideoCameraOutlined />} onClick={e => {
-                        debugger;
+            </Header>
+            <Layout>
+                <Sider collapsible width={SiderWidth} collapsedWidth={SiderCollapsedWidth} style={{ position: "fixed", height: "100%" }}
+                    onCollapse={collapse => {
+                        if (collapse)
+                            this.setState({ mainLayerLeftMargin: SiderCollapsedWidth });
+                        else
+                            this.setState({ mainLayerLeftMargin: SiderWidth });
                     }}>
-                        nav 2
-                    </Menu.Item>
-                    <Menu.Item key="3" icon={<UploadOutlined />}>
-                        nav 3
-                    </Menu.Item>
-                    <Menu.Item key="4" icon={<BarChartOutlined />}>
-                        nav 4
-                    </Menu.Item>
-                    <Menu.Item key="5" icon={<CloudOutlined />}>
-                        nav 5
-                    </Menu.Item>
-                    <Menu.Item key="6" icon={<AppstoreOutlined />}>
-                        nav 6
-                    </Menu.Item>
-                    <Menu.Item key="7" icon={<TeamOutlined />}>
-                        nav 7
-                    </Menu.Item>
-                    <Menu.Item key="8" icon={<ShopOutlined />}>
-                        nav 8
-                    </Menu.Item>
-                </Menu>
-            </Sider>
-            <Layout className="site-layout" style={{ marginLeft: 200 }}>
-                <Header className="site-layout-background" style={{ padding: 0 }} />
-                <Content style={{ margin: '1', overflow: 'initial', backgroundColor: 'white' }}>
-                    <div className={`page-container page-placeholder`}
-                        ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
-                    </div>
-                </Content>
-                {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={currentNode ? [currentNode.id] : []} defaultOpenKeys={openKeys}>
+                        {firstLevelNodes.filter(o => !o.hidden).map(n => this.renderMenuItem(n))}
+                    </Menu>
+                </Sider>
+                <Layout className="site-layout" style={{ marginLeft: mainLayerLeftMargin }}>
+                    <Content style={{ margin: '1', overflow: 'initial', backgroundColor: 'white' }}>
+                        <div className={`page-container page-placeholder`}
+                            ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
+                        </div>
+                    </Content>
+                    {/* <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer> */}
+                </Layout>
             </Layout>
         </Layout >
 
