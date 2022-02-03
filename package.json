@@ -29,8 +29,8 @@
         "mocha": "^8.3.0",
         "node-sass": "^5.0.0"
     },
-    "name": "maishu-admin-scaffold",
-    "version": "1.13.1",
+    "name": "maishu-gemwon-admin",
+    "version": "1.0.0",
     "scripts": {
         "start": "node-mvc ./demo"
     }

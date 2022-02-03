@@ -188,7 +188,7 @@ class Menu extends React.Component<{ menuItems: MenuItem[], current: MenuItem | 
             }
         }
 
-        return <li className={menuItemClassName}>
+        return <li key={menuItem.id} className={menuItemClassName}>
             <div className="submenu-title">
                 <span className="submenu-icon">
                     <a href={menuItem.path} onClick={e => {
@@ -204,7 +204,7 @@ class Menu extends React.Component<{ menuItems: MenuItem[], current: MenuItem | 
                 {children.length > 0 ? <span className="arrow"></span> : null}
             </div>
             {children.length > 0 ? <ul className="menu-sub">
-                {children.map(c => <li className={c.id == currentNode?.id ? "selected" : ""}><a href={c.path}>{c.name}</a></li>)}
+                {children.map(c => <li key={c.id} className={c.id == currentNode?.id ? "selected" : ""}><a href={c.path}>{c.name}</a></li>)}
             </ul> : null}
         </li>
     }
