@@ -1,90 +1,93 @@
 .list-style {
-    margin: 0;
-    padding: 0;
+    margin    : 0;
+    padding   : 0;
     list-style: none outside;
 }
 
 aside {
-    padding: 60px 0 0px 0;
-    width: 260px;
-    position: fixed;
-    left: 0;
-    top: 0px;
-    bottom: 0px;
+    padding   : @sidebar-padding;
+    width     : @sidebar-width;
+    position  : fixed;
+    left      : 0;
+    top       : 0px;
+    bottom    : 0px;
     background: #fff;
-    z-index: 10;
+    z-index   : 10;
     box-sizing: border-box;
-    &.asidebottom{
+
+    &.asidebottom {
         bottom: 80px;
-        @media (max-width: 992px) { 
-            bottom: 0px; 
+
+        @media (max-width: 992px) {
+            bottom: 0px;
         }
     }
+
     .sider-menu {
-        width: 100%;
-        height: 100%;
-        flex: 1 1 0%;
-        overflow: hidden auto;
+        width     : 100%;
+        height    : 100%;
+        flex      : 1 1 0%;
+        overflow  : hidden auto;
         box-sizing: border-box;
 
         &::-webkit-scrollbar {
-            width: 6px;
+            width : 6px;
             height: 6px;
         }
 
         &::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, .12);
+            background   : rgba(0, 0, 0, .12);
             border-radius: 3px;
-            box-shadow: inset 0 0 5px rgb(0 21 41 / 5%);
+            box-shadow   : inset 0 0 5px rgb(0 21 41 / 5%);
         }
 
         &::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, .06);
+            background   : rgba(0, 0, 0, .06);
             border-radius: 3px;
-            box-shadow: inset 0 0 5px rgb(0 21 41 / 5%);
+            box-shadow   : inset 0 0 5px rgb(0 21 41 / 5%);
         }
 
         ul {
             .list-style();
             padding: 10px 0 50px 0;
-            width: 100%;
-            height: auto;
+            width  : 100%;
+            height : auto;
 
             li {
                 .list-style();
-                width: 100%;
+                width : 100%;
                 height: auto;
 
                 .submenu-title {
-                    margin: 6px 0;
-                    padding: 0 35px 0 25px;
-                    width: 100%;
-                    height: 40px;
+                    margin     : 6px 0;
+                    padding    : @sidebar-item-padding;
+                    width      : 100%;
+                    height     : 40px;
                     line-height: 40px;
-                    box-sizing: border-box;
-                    position: relative;
-                    z-index: 0;
+                    box-sizing : border-box;
+                    position   : relative;
+                    z-index    : 0;
                     border-left: 4px solid #fff;
-                    background: #fff;
+                    background : #fff;
 
                     .submenu-icon {
-                        width: 100%;
-                        height: 40px;
+                        width        : 100%;
+                        height       : 40px;
                         text-overflow: ellipsis;
-                        white-space: nowrap;
-                        overflow: hidden;
+                        white-space  : nowrap;
+                        overflow     : hidden;
 
                         a {
-                            font-size: 16px;
-                            display: flex;
-                            flex-wrap: nowrap;
+                            font-size  : 16px;
+                            display    : flex;
+                            flex-wrap  : nowrap;
                             align-items: center;
                             white-space: nowrap;
 
                             i {
-                                width: 16px;
+                                width       : 16px;
                                 margin-right: 10px;
-                                font-size: 16px;
+                                font-size   : 16px;
 
                                 svg {
                                     margin-bottom: -2px;
@@ -94,39 +97,39 @@ aside {
                     }
 
                     .arrow {
-                        position: absolute;
-                        top: 0;
-                        right: 0;
-                        width: 35px;
-                        height: 40px;
-                        cursor: pointer;
+                        position   : absolute;
+                        top        : 0;
+                        right      : 0;
+                        width      : 35px;
+                        height     : 40px;
+                        cursor     : pointer;
                         user-select: none;
-                        overflow: hidden;
+                        overflow   : hidden;
 
                         &::before {
-                            position: absolute;
-                            left: 12px;
-                            top: 21px;
-                            width: 6px;
-                            height: 1.5px;
+                            position     : absolute;
+                            left         : 12px;
+                            top          : 21px;
+                            width        : 6px;
+                            height       : 1.5px;
                             border-radius: 2px;
-                            content: "";
-                            background: #a6a6a6;
-                            transform: rotate(45deg);
-                            transition: all .3s;
+                            content      : "";
+                            background   : #a6a6a6;
+                            transform    : rotate(45deg);
+                            transition   : all .3s;
                         }
 
                         &::after {
-                            position: absolute;
-                            left: 15px;
-                            top: 21px;
-                            width: 6px;
-                            height: 1.5px;
+                            position     : absolute;
+                            left         : 15px;
+                            top          : 21px;
+                            width        : 6px;
+                            height       : 1.5px;
                             border-radius: 2px;
-                            content: "";
-                            background: #a6a6a6;
-                            transform: rotate(-45deg);
-                            transition: all .3s;
+                            content      : "";
+                            background   : #a6a6a6;
+                            transform    : rotate(-45deg);
+                            transition   : all .3s;
                         }
                     }
 
@@ -135,7 +138,7 @@ aside {
                 &:hover {
                     .submenu-title {
                         &:hover {
-                            background: rgba(24, 114, 255, 0.05);
+                            background : rgba(24, 114, 255, 0.05);
                             border-left: 4px solid rgba(24, 114, 255, 0.05);
                         }
 
@@ -148,40 +151,40 @@ aside {
                 ul.menu-sub {
                     .list-style();
                     box-sizing: border-box;
-                    display: none;
+                    display   : none;
 
                     li {
                         .list-style();
-                        width: 100%;
+                        width : 100%;
                         height: 40px;
 
                         a {
-                            padding-left: 49px;
-                            border-left: 4px solid #fff;
-                            width: 100%;
-                            height: 40px;
-                            line-height: 40px;
-                            font-size: 16px;
-                            color: #333;
-                            box-sizing: border-box;
-                            display: block;
-                            flex-wrap: nowrap;
-                            align-items: center;
-                            white-space: nowrap;
+                            padding-left : @sidebar-sub-item-padding;
+                            border-left  : 4px solid #fff;
+                            width        : 100%;
+                            height       : 40px;
+                            line-height  : 40px;
+                            font-size    : 16px;
+                            color        : #333;
+                            box-sizing   : border-box;
+                            display      : block;
+                            flex-wrap    : nowrap;
+                            align-items  : center;
+                            white-space  : nowrap;
                             text-overflow: ellipsis;
-                            overflow: hidden;
+                            overflow     : hidden;
 
                             &:hover {
                                 border-left: 4px solid rgba(24, 114, 255, 0.05);
-                                background: rgba(24, 114, 255, 0.05);
+                                background : rgba(24, 114, 255, 0.05);
                             }
                         }
 
                         &.selected {
                             a {
-                                color: #1890FF;
+                                color      : #1890FF;
                                 border-left: 4px solid #1890FF;
-                                background: rgba(24, 114, 255, 0.1);
+                                background : rgba(24, 114, 255, 0.1);
                             }
                         }
                     }
@@ -191,10 +194,10 @@ aside {
                 &.selected {
                     .submenu-title {
                         border-left: 4px solid #1890FF;
-                        background: rgba(24, 114, 255, 0.1);
+                        background : rgba(24, 114, 255, 0.1);
 
                         a {
-                            color: #1890FF;
+                            color      : #1890FF;
                             font-weight: bold;
                         }
                     }
@@ -202,10 +205,10 @@ aside {
                     &:hover {
                         .submenu-title {
                             border-left: 4px solid #1890FF;
-                            background: rgba(24, 114, 255, 0.1);
+                            background : rgba(24, 114, 255, 0.1);
 
                             a {
-                                color: #1890FF;
+                                color      : #1890FF;
                                 font-weight: bold;
                             }
                         }
@@ -220,12 +223,12 @@ aside {
                     .submenu-title {
                         .arrow {
                             &::before {
-                                transform: rotate(-45deg);
+                                transform : rotate(-45deg);
                                 transition: all .3s;
                             }
 
                             &::after {
-                                transform: rotate(45deg);
+                                transform : rotate(45deg);
                                 transition: all .3s;
                             }
                         }
@@ -251,15 +254,15 @@ aside {
     }
 
     @media (max-width: 992px) {
-        left: -100%;
+        left      : -100%;
         transition: all 0.3s;
 
     }
 
     &.small-aside {
         @media (max-width: 992px) {
-            width: 100%;
-            left: 0;
+            width     : 100%;
+            left      : 0;
             transition: all 0.3s;
         }
     }
