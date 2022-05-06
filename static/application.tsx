@@ -6,7 +6,7 @@ import * as React from "react";
 
 import { SimpleMasterPage } from "./masters/simple-master-page";
 import { MainMasterPage } from "./masters/main-master-page";
-import { WebsiteConfig } from "./website-config";
+import { MenuItem, WebsiteConfig } from "./website-config";
 
 import "node_modules/font-awesome/css/font-awesome.css";
 import { pathConcat } from 'maishu-toolkit';
@@ -49,7 +49,7 @@ export class Application extends chitu_react.Application {
         this.pageCreated.add((sender, page) => this.onPageCreated(page));
 
         ReactDOM.render(<SimpleMasterPage app={this} ref={e => this._simpleMaster = e || this._simpleMaster} />, simpleContainer);
-        ReactDOM.render(<MainMasterPage app={this} menuItems={this._config.menuItems} currentPageUrl={location.href}
+        ReactDOM.render(<MainMasterPage app={this} menuItems={this._config.menuItems || []} currentPageUrl={location.href}
             ref={e => this._mainMaster = e || this._mainMaster} />, mainContainer);
     }
 
@@ -69,7 +69,7 @@ export class Application extends chitu_react.Application {
         config.menuItems = config.menuItems || [];
         let stack = [...config.menuItems];
         while (stack.length > 0) {
-            let item = stack.pop();
+            let item = stack.pop() as MenuItem;
             item.type = item.type || "menu";
             item.children = item.children || [];
             item.children.forEach(c => {
@@ -102,7 +102,7 @@ export class Application extends chitu_react.Application {
     }
 
 
-    private siteRequireJS = {};
+    private siteRequireJS: any = {};
 
     async loadjs(path: string) {
 
@@ -110,7 +110,7 @@ export class Application extends chitu_react.Application {
             path = path.substr("modules//".length);
             let arr = path.split("/");
             console.assert(arr.length >= 2);
-            let sitePath = arr.shift();
+            let sitePath = arr.shift() as string;
             if (!this.siteRequireJS[sitePath]) {
                 let websiteConfig = await this.getWebsiteConfig(sitePath);
                 this.siteRequireJS[sitePath] = this.configRequirejs(websiteConfig, sitePath);
@@ -119,10 +119,10 @@ export class Application extends chitu_react.Application {
             let newPath = `modules/${arr.join('/')}`;
             return new Promise((resolve, reject) => {
                 this.siteRequireJS[sitePath]([newPath],
-                    mod => {
+                    (mod: any) => {
                         resolve(mod)
                     },
-                    err => {
+                    (err: any) => {
                         reject(err)
                     }
                 );
@@ -145,9 +145,9 @@ export class Application extends chitu_react.Application {
     private getWebsiteConfig(sitePath: string) {
         return new Promise<WebsiteConfig>((resolve, reject) => {
             let websiteConfigPath = pathConcat(sitePath, "website-config.js");
-            requirejs([websiteConfigPath], mod => {
+            requirejs([websiteConfigPath], (mod: any) => {
                 resolve(mod.default || mod);
-            }, err => {
+            }, (err: any) => {
                 reject(err);
             })
         })
@@ -177,7 +177,7 @@ export class Application extends chitu_react.Application {
     }
 }
 
-export function run(config: WebsiteConfig, req) {
-    window["app"] = window["app"] || new Application(config, req);
-    return window["app"];
+export function run(config: WebsiteConfig, req: any) {
+    (window as any)["app"] = (window as any)["app"] || new Application(config, req);
+    return (window as any)["app"];
 }

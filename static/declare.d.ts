@@ -203,4 +203,4 @@ type SimpleMenuItem = {
     hidden?: boolean,
 };
 
-// declare let requirejs: Function & { config?: Function };
+declare let requirejs: Function & { config: Function };

@@ -1,26 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sourceVirtualPaths = exports.getVirtualPaths = void 0;
+exports.startServer = exports.sourceVirtualPaths = exports.getVirtualPaths = void 0;
 const fs = require("fs");
 const path = require("path");
 const maishu_toolkit_1 = require("maishu-toolkit");
 const errors_1 = require("./errors");
 const sc = require("maishu-chitu-scaffold");
 const maishu_node_mvc_1 = require("maishu-node-mvc");
+const common_1 = require("./common");
 /** @param {string} [basePath]  */
 function getVirtualPaths(basePath, targetPath) {
     let existsFilePaths = {};
     if (targetPath) {
         existsFilePaths = getFilePaths(targetPath);
     }
-    let staticDir = path.join(__dirname, "static");
+    let staticDir = path.join(__dirname, common_1.STATIC);
     let staticFilePaths = getFilePaths(staticDir);
     Object.assign(staticFilePaths, existsFilePaths);
     let scFiles = sc.getVirtualPaths(basePath, targetPath);
     if (basePath) {
         let keys = Object.getOwnPropertyNames(staticFilePaths);
         for (let i = 0; i < keys.length; i++) {
-            let path = maishu_toolkit_1.pathConcat(basePath, keys[i]);
+            let path = (0, maishu_toolkit_1.pathConcat)(basePath, keys[i]);
             staticFilePaths[path] = staticFilePaths[keys[i]];
             delete staticFilePaths[keys[i]];
         }
@@ -44,18 +45,18 @@ function getFilePaths(dir) {
         let relativePath = stack.pop();
         if (relativePath === undefined)
             break;
-        let p = maishu_toolkit_1.pathConcat(dir, relativePath);
+        let p = (0, maishu_toolkit_1.pathConcat)(dir, relativePath);
         let names = fs.readdirSync(p);
         for (let i = 0; i < names.length; i++) {
-            let childPhysicalPath = maishu_toolkit_1.pathConcat(p, names[i]);
-            let childRelativePath = maishu_toolkit_1.pathConcat(relativePath, names[i]);
+            let childPhysicalPath = (0, maishu_toolkit_1.pathConcat)(p, names[i]);
+            let childRelativePath = (0, maishu_toolkit_1.pathConcat)(relativePath, names[i]);
             let state = fs.statSync(childPhysicalPath);
             if (state.isDirectory()) {
                 stack.push(childRelativePath);
                 continue;
             }
             if (state.isFile()) {
-                r[maishu_toolkit_1.pathConcat(relativePath, names[i])] = childPhysicalPath;
+                r[(0, maishu_toolkit_1.pathConcat)(relativePath, names[i])] = childPhysicalPath;
             }
         }
     }
@@ -64,10 +65,10 @@ function getFilePaths(dir) {
 function sourceVirtualPaths(rootDirectory) {
     let root = typeof rootDirectory == "string" ? new maishu_node_mvc_1.VirtualDirectory(rootDirectory) : rootDirectory;
     let ctVirtualFiles = sc.sourceVirtualPaths(__dirname);
-    let staticDir = maishu_toolkit_1.pathConcat(__dirname, "static");
+    let staticDir = (0, maishu_toolkit_1.pathConcat)(__dirname, common_1.STATIC);
     let staticRelativeFiles = getFilePaths(staticDir);
     let items = Object.getOwnPropertyNames(staticRelativeFiles)
-        .map(o => ({ relativePath: maishu_toolkit_1.pathConcat("static", o), physicalPath: staticRelativeFiles[o] }));
+        .map(o => ({ relativePath: (0, maishu_toolkit_1.pathConcat)(common_1.STATIC, o), physicalPath: staticRelativeFiles[o] }));
     let virtualFiles = {};
     for (let i = 0; i < items.length; i++) {
         if (root.findFile(items[i].relativePath))
@@ -78,3 +79,7 @@ function sourceVirtualPaths(rootDirectory) {
     return virtualFiles;
 }
 exports.sourceVirtualPaths = sourceVirtualPaths;
+function startServer(settings) {
+    (0, maishu_node_mvc_1.startServer)(settings);
+}
+exports.startServer = startServer;

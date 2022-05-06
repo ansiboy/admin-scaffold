@@ -25,7 +25,7 @@ export class SimpleMasterPage extends MasterPage<State>{
                 {this.state?.toolbar}
             </nav>
             <div className={`page-container page-placeholder`}
-                ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
+                ref={e => this.pageContainer = e || this.pageContainer}>
             </div>
         </div>
     }

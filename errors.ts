@@ -11,6 +11,21 @@ class Errors extends BaseErrors {
         let error = new Error(msg);
         return error;
     }
+    virtualFileNotExists(virtualPath: string) {
+        let msg = `Virtual path ${virtualPath} is not exists.`;
+        let error = new Error(msg);
+        return error;
+    }
+    cannotGetApplicationId() {
+        let msg = "Can not get application id.";
+        let error = new Error(msg);
+        return error;
+    }
+    fileNotExists(path: string) {
+        let msg = `Path ${path} is not exists.`;
+        let error = new Error(msg);
+        return error;
+    }
 }
 
 export let errors = new Errors();

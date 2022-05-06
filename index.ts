@@ -3,7 +3,8 @@ import * as path from "path";
 import { pathConcat } from "maishu-toolkit";
 import { errors } from "./errors";
 import * as sc from "maishu-chitu-scaffold";
-import { VirtualDirectory } from "maishu-node-mvc";
+import { Settings, VirtualDirectory, startServer as baseStartServer } from "maishu-node-mvc";
+import { STATIC } from "./common";
 
 /** @param {string} [basePath]  */
 export function getVirtualPaths(basePath?: string, targetPath?: string) {
@@ -12,7 +13,7 @@ export function getVirtualPaths(basePath?: string, targetPath?: string) {
         existsFilePaths = getFilePaths(targetPath);
     }
 
-    let staticDir = path.join(__dirname, "static");
+    let staticDir = path.join(__dirname, STATIC);
     let staticFilePaths = getFilePaths(staticDir);
     Object.assign(staticFilePaths, existsFilePaths);
 
@@ -74,10 +75,10 @@ export function sourceVirtualPaths(rootDirectory: string | VirtualDirectory) {
 
     let ctVirtualFiles = sc.sourceVirtualPaths(__dirname);
 
-    let staticDir = pathConcat(__dirname, "static");
+    let staticDir = pathConcat(__dirname, STATIC);
     let staticRelativeFiles = getFilePaths(staticDir);
     let items = Object.getOwnPropertyNames(staticRelativeFiles)
-        .map(o => ({ relativePath: pathConcat("static", o), physicalPath: staticRelativeFiles[o] }));
+        .map(o => ({ relativePath: pathConcat(STATIC, o), physicalPath: staticRelativeFiles[o] }));
 
     let virtualFiles: { [key: string]: string } = {};
     for (let i = 0; i < items.length; i++) {
@@ -92,4 +93,7 @@ export function sourceVirtualPaths(rootDirectory: string | VirtualDirectory) {
     return virtualFiles;
 }
 
+export function startServer(settings: Settings) {
+    baseStartServer(settings);
+}
 

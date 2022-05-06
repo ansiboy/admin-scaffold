@@ -3,12 +3,15 @@
         "module": "CommonJS",
         "target": "ES6",
         "strict": true,
+        "strictPropertyInitialization": false,
         "noEmit": false,
+        "experimentalDecorators": true,
+        "jsx": "react"
     },
     "compileOnSave": true,
     "exclude": [
+        "demo/static",
+        "test/static",
         "static",
-        "demo",
-        "test/static"
     ],
 }

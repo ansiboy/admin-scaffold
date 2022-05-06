@@ -23,6 +23,7 @@ let menuItems: MenuItem[] = [
 
 export interface WebsiteConfig extends BaseWebsiteConfig {
     menuItems?: MenuItem[],
+    plugins?: { [appId: string]: { path: string } }[],
 }
 
 let websiteConfig: WebsiteConfig = {

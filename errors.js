@@ -13,5 +13,20 @@ class Errors extends maishu_toolkit_1.Errors {
         let error = new Error(msg);
         return error;
     }
+    virtualFileNotExists(virtualPath) {
+        let msg = `Virtual path ${virtualPath} is not exists.`;
+        let error = new Error(msg);
+        return error;
+    }
+    cannotGetApplicationId() {
+        let msg = "Can not get application id.";
+        let error = new Error(msg);
+        return error;
+    }
+    fileNotExists(path) {
+        let msg = `Path ${path} is not exists.`;
+        let error = new Error(msg);
+        return error;
+    }
 }
 exports.errors = new Errors();

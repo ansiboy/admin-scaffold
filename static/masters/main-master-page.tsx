@@ -37,7 +37,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
     }
 
     get element() {
-        return document.getElementById("main-master");
+        return document.getElementById("main-master") as HTMLElement;
     }
 
     findMenuItemByPageUrl(menuItems: MenuItem[], pageUrl: string) {
@@ -105,7 +105,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
         let currentPageUrl: string = this.state.currentPageUrl || '';
 
         let firstLevelNodes = menuItems.filter(o => o.type == "menu");
-        let currentNode: MenuItem | null | undefined
+        let currentNode: MenuItem | null | undefined = undefined;
         if (currentPageUrl) {
             currentNode = this.findMenuItemByPageUrl(firstLevelNodes, currentPageUrl);
             let q = currentPageUrl.indexOf("?");
@@ -130,7 +130,7 @@ export class MainMasterPage extends MasterPage<State, Props> {
             <div className="layout">
                 <main>
                     <div className="container-fluid fluid">
-                        <div className="main page-container page-placeholder" ref={(e: HTMLElement) => this.pageContainer = e || this.pageContainer}>
+                        <div className="main page-container page-placeholder" ref={e => this.pageContainer = e || this.pageContainer}>
 
                         </div>
 
@@ -143,13 +143,13 @@ export class MainMasterPage extends MasterPage<State, Props> {
     }
 }
 
-class Menu extends React.Component<{ menuItems: MenuItem[], current: MenuItem | null }, { expendId?: string }> {
+class Menu extends React.Component<{ menuItems: MenuItem[], current: MenuItem | null | undefined }, { expendId?: string }> {
 
     constructor(props: Menu["props"]) {
         super(props);
 
-        let expendId: string;
-        let current = props.current;
+        let expendId: string | undefined = undefined;
+        let current = props.current as MenuItem;
         if (current != null) {
             props.menuItems.forEach(m => {
                 if (m.id == current.id || m.id == current.parent?.id) {
@@ -160,22 +160,22 @@ class Menu extends React.Component<{ menuItems: MenuItem[], current: MenuItem | 
         }
 
 
-        this.state = { expendId };
+        this.setState({ expendId });
     }
 
     toggle(menuItem: MenuItem) {
         let expendId = this.state.expendId;
         if (expendId == menuItem.id)
-            this.setState({ expendId: null });
+            this.setState({ expendId: undefined });
         else
             this.setState({ expendId: menuItem.id });
     }
 
-    renderMenuItem(menuItem: MenuItem, currentNode: MenuItem) {
+    renderMenuItem(menuItem: MenuItem, currentNode: MenuItem | null | undefined) {
         let children = (menuItem.children || []).filter(o => !o.hidden && o.name);
         let { expendId } = this.state || {};
 
-        let menuItemClassName: string;
+        let menuItemClassName: string | undefined = undefined;
         if (menuItem.id == currentNode?.id) {
             menuItemClassName = "selected";
         }
