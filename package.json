@@ -30,7 +30,7 @@
         "mocha": "^9.2.2"
     },
     "name": "maishu-gemwon-admin",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "scripts": {
         "start": "node-mvc ./demo"
     }

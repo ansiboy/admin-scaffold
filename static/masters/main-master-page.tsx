@@ -160,7 +160,7 @@ class Menu extends React.Component<{ menuItems: MenuItem[], current: MenuItem | 
         }
 
 
-        this.setState({ expendId });
+        this.state = { expendId };
     }
 
     toggle(menuItem: MenuItem) {
@@ -209,7 +209,7 @@ class Menu extends React.Component<{ menuItems: MenuItem[], current: MenuItem | 
         </li>
     }
 
-    render(): React.ReactNode {
+    render() {
         let { menuItems, current } = this.props;
         return <ul>
             {menuItems.filter(o => !o.hidden && o.name).map(n => this.renderMenuItem(n, current))}
