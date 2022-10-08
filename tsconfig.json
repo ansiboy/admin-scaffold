@@ -1,17 +1,25 @@
 {
-    "compilerOptions": {
-        "module": "CommonJS",
-        "target": "ES6",
-        "strict": true,
-        "strictPropertyInitialization": false,
-        "noEmit": false,
-        "experimentalDecorators": true,
-        "jsx": "react"
-    },
-    "compileOnSave": true,
-    "exclude": [
-        "demo/static",
-        "test/static",
-        "static",
-    ],
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "jsx": "react"
+  },
+  "include": [
+    "src"
+  ]
 }
